@@ -1,0 +1,31 @@
+﻿@{
+
+}
+
+<style>
+    /* Style to center align buttons */
+    .centered-buttons {
+        text-align: center;
+        margin-top: 50px; /* Adjust as needed */
+    }
+
+    /* Style to add padding to the description */
+    .description {
+        padding: 20px;
+        text-align: center;
+    }
+</style>
+<body>
+    <!-- Project Description -->
+    <div class="description">
+        <h2>Project Title</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    </div>
+
+    <!-- Buttons -->
+    <div class="centered-buttons">
+        <a asp-controller="User" asp-action="Index" type="button" class="btn btn-sm btn-primary mr-2">Sign In</a>
+        <a asp-controller="User" asp-action="Registrer" type="button" class="btn btn-sm btn-secondary">Register</a>
+    </div>
+</body>
+</html>

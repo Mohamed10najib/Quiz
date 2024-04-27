@@ -1,0 +1,47 @@
+﻿@model User
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<section class="vh-100" style="background-color: #508bfc;">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                    <div class="card-body p-5 text-center">
+                        <form method="post" asp-action="Index">
+    @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+    {
+        <div class="alert alert-danger mt-3" role="alert">
+            @ViewBag.ErrorMessage 
+            <a asp-controller="User" asp-action="Registrer" type="button" class="btn btn-sm btn-outline-secondary">Register</a>
+        </div>
+
+    }
+                        <h3 class="mb-5">Sign in</h3>
+
+                        <div data-mdb-input-init class="form-outline mb-4">
+                            <label asp-for="Username" class="form-label">UserName</label>
+                            <input asp-for="Username" type="text" class="form-control form-control-lg" id="Username">
+                            <span asp-validation-for="Username" class="text-danger">Entrer votre  UserName</span>
+                        </div>
+
+                        <div data-mdb-input-init class="form-outline mb-4">
+                            <label asp-for="Password" class="form-label">Password</label>
+                            <input asp-for="Password" type="password" class="form-control form-control-lg" id="Password">
+                            <span asp-validation-for="Password" class="text-danger">Entrer votre Password</span>
+                        </div>
+
+
+                        <button data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
+
+                        <hr class="my-4">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -25,6 +25,19 @@ namespace Quiz.Controllers
             _StartedQuizRepository = StartedQuizRepository;
 
         }
+        public async Task<IActionResult> JoinQuizApreCode(string CodeQuiz)
+        {
+            StartedQuizTeacher startedQuizTeacher = await _StartedQuizRepository.GetStartedQuizByCodeQuiz(CodeQuiz);
+            if(startedQuizTeacher == null) { return View("RejoindreQuiz"); }
+            else { return View(startedQuizTeacher); }
+           
+            
+        }
+        public IActionResult RejoindreQuiz()
+        {
+
+            return View();
+        }
         public async Task<IActionResult> StartQuizByTeacher(int idQuiz)
         {
             string userString = _context.HttpContext.Session.GetString("currentUser");

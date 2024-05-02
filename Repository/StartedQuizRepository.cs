@@ -1,4 +1,5 @@
-﻿using Quiz.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Quiz.Data;
 using Quiz.interfaces;
 using Quiz.Models;
 
@@ -13,17 +14,25 @@ namespace Quiz.Repository
         }
        public bool AddStartedStudent(Models.StartedQuizStudent startedQuizStudent)
         {
-            _context.StartedQuizStudents.Add(startedQuizStudent);
+            _context.Add(startedQuizStudent);
            return  Save();
 
 
 
         }
+        public async Task<StartedQuizTeacher> GetStartedQuizByCodeQuiz(string codeQuiz)
+        {
+          
+            return await _context.StartedQuizTeachers
+                .Include(sqt => sqt.Teacher) 
+                .Include(sqt => sqt.Quiz) 
+                .FirstOrDefaultAsync(sqt => sqt.CodeQuiz == codeQuiz);
+        }
         public bool AddStartedTeacher(Models.StartedQuizTeacher startedQuizTeacher)
         {
             try
             {
-                _context.StartedQuizTeachers.Add(startedQuizTeacher);
+                _context.Add(startedQuizTeacher);
                 return Save(); // Call Save method to save changes to the database
             }
             catch (Exception ex)

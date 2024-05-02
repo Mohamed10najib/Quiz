@@ -17,6 +17,8 @@ namespace Quiz.Models
         [JsonIgnore]
 
         public ICollection<Quiz>? quizzes { get; set; }
+        public ICollection<StartedQuizStudent>? StartedQuizStudents { get; set; }
+        public ICollection<StartedQuizTeacher>? StartedQuizTeachers { get; set; }
 
     }
 }

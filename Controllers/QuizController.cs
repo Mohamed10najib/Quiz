@@ -26,6 +26,14 @@ namespace Quiz.Controllers
             _StartedQuizRepository = StartedQuizRepository;
 
         }
+
+        public async Task<IActionResult> QuizIsStarted(string QuizCode)
+        {
+            StartedQuizTeacher startedQuizTeacher = await _StartedQuizRepository.GetStartedQuizByCodeQuiz(QuizCode);
+            startedQuizTeacher.IsStarted = true;
+            _StartedQuizRepository.UpdateStartedQuizTeacher(startedQuizTeacher);
+            return View();
+        }
         public async Task<IActionResult> JoinQuizApreCode(string CodeQuiz)
         {
             StartedQuizTeacher startedQuizTeacher = await _StartedQuizRepository.GetStartedQuizByCodeQuiz(CodeQuiz);
@@ -50,7 +58,13 @@ namespace Quiz.Controllers
 
 
                 }
-               
+                var isStarted = startedQuizTeacher.IsStarted;
+                if (isStarted)
+                {
+                    Models.Quiz quiz = await _quizRepository.GetById(startedQuizTeacher.QuizId.Value);
+                   
+                    return View("QuestionPage", quiz);
+                }
 
                 return View(startedQuizTeacher); }
            

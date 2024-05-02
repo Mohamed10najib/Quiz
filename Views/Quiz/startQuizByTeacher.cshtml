@@ -261,7 +261,11 @@ var listStudent = ViewBag.ListeStudent;
                         </div>
 
                     </div>
-                    <div class="innerdiv112"><div><button type="button" class="btn comm btn-primary">Commencer</button></div></div>
+                    <div class="innerdiv112"><div><<form asp-action="QuizIsStarted" >
+                                <input hidden name="QuizCode" value="@codeQuiz" />
+                        <button type="submit" class="btn comm btn-primary">Commencer</button>
+                        
+                    </form></div></div>
                 </div>
                 <div class="innerdiv12">
                     <div class="innerdiv121"><p>Les participants</p></div>

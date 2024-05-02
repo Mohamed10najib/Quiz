@@ -14,9 +14,9 @@
                         <p class="card-text">Duration: @q.DurationMinutes minutes</p>
                         <p class="card-text">Number of questions: @q.NbrQuestion</p>
                         <form asp-action="startQuizByTeacher">
-                            <input hidden type="text" value="@q.QuizId" name="idQuiz" />
-                          
-                        <button type="submit"  class="btn btn-primary">Start Quiz</button>
+                            <input hidden type="text" value="@q.QuizId" name="idQuiz" ></input>
+                            <input hidden type="text" value="@Guid.NewGuid().ToString()" name="uniqueIdString"></input>
+                            <button type="submit" class="btn btn-primary">Start Quiz</button>
                         </form>
                     </div>
                 </div>

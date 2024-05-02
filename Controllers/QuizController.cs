@@ -29,7 +29,29 @@ namespace Quiz.Controllers
         {
             StartedQuizTeacher startedQuizTeacher = await _StartedQuizRepository.GetStartedQuizByCodeQuiz(CodeQuiz);
             if(startedQuizTeacher == null) { return View("RejoindreQuiz"); }
-            else { return View(startedQuizTeacher); }
+            else {
+                string userString = _context.HttpContext.Session.GetString("currentUser");
+                Models.User user = JsonConvert.DeserializeObject<Models.User>(userString);
+                bool isExist = await _StartedQuizRepository.IsJoinStudent(user.UserId,CodeQuiz);
+                if (!isExist)
+                {
+                    StartedQuizStudent startedQuizStudent = new StartedQuizStudent(user.UserId, startedQuizTeacher.TeacherId);
+                    if (startedQuizTeacher.StartedQuizStudents == null)
+                    {
+                        
+                        startedQuizTeacher.StartedQuizStudents = new List<StartedQuizStudent>();
+                    }
+                    startedQuizTeacher.StartedQuizStudents.Add(startedQuizStudent);
+
+                    _StartedQuizRepository.AddStartedStudent(startedQuizStudent);
+                   
+                     _StartedQuizRepository.UpdateStartedQuizTeacher(startedQuizTeacher);
+
+
+                }
+               
+
+                return View(startedQuizTeacher); }
            
             
         }
@@ -38,7 +60,7 @@ namespace Quiz.Controllers
 
             return View();
         }
-        public async Task<IActionResult> StartQuizByTeacher(int idQuiz)
+        public async Task<IActionResult> StartQuizByTeacher(int idQuiz, string uniqueIdString)
         {
             string userString = _context.HttpContext.Session.GetString("currentUser");
             if (userString != null)
@@ -46,16 +68,37 @@ namespace Quiz.Controllers
                 Models.User user = JsonConvert.DeserializeObject<Models.User>(userString);
                 if (user != null)
                 {
+                    StartedQuizTeacher startedQuizTeachernew;
                     Models.Quiz quiz = await _quizRepository.GetById(idQuiz);
                     if (quiz != null)
                     {
-                        Guid uniqueId = Guid.NewGuid();
-                        string uniqueIdString = uniqueId.ToString();
-                        StartedQuizTeacher startedQuizTeachernew = new StartedQuizTeacher(user.UserId, idQuiz, uniqueIdString);
-                        _StartedQuizRepository.AddStartedTeacher(startedQuizTeachernew);
+                        bool isExist = await _StartedQuizRepository.IsExistStartedQuizByCodeQuiz(uniqueIdString);
+                        if (!isExist) {
+                             startedQuizTeachernew = new StartedQuizTeacher(user.UserId, idQuiz, uniqueIdString);
+                            _StartedQuizRepository.AddStartedTeacher(startedQuizTeachernew);
+                        }
+                        else {  startedQuizTeachernew =  await _StartedQuizRepository.GetStartedQuizByCodeQuiz(uniqueIdString);
+                  }
 
+
+                        if (startedQuizTeachernew != null)
+                        {
+                            ICollection<StartedQuizStudent> students = startedQuizTeachernew.StartedQuizStudents;
+
+                            ViewBag.ListeStudent = students;
+
+
+
+
+                        }
+                        else
+                        {
+                          
+                            ViewBag.ListeStudent = null;
+                        }
                         ViewBag.iCodeQuiz = uniqueIdString;
                         ViewBag.idQuiz = idQuiz;
+
                         return View();
                     }
                     else

@@ -19,10 +19,10 @@ namespace Quiz.Models
             CodeQuiz = codeQuiz;
             IsStarted = false;
             IsTerminated = false;
-            ListStudents = new List<StartedQuizStudent>();
+
         }
         [Key]
-        public int Id { get; set; }
+        public int IdStartedQuizTeacher { get; set; }
 
         [ForeignKey("TeacherId")]
         public int TeacherId { get; set; } // Assuming User table has UserId as primary key
@@ -39,6 +39,6 @@ namespace Quiz.Models
         public bool IsTerminated { get; set; }
 
         // Navigation property to represent the list of students who have started this quiz
-        public ICollection<StartedQuizStudent>? ListStudents { get; set; }
+        public ICollection<StartedQuizStudent>? StartedQuizStudents { get; set; }
     }
 }

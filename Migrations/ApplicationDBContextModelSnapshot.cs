@@ -125,10 +125,13 @@ namespace Quiz.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("IdStartedQuizTeacher")
+                        .HasColumnType("int");
+
                     b.Property<int>("Score")
                         .HasColumnType("int");
 
-                    b.Property<int?>("StartedQuizTeacherId")
+                    b.Property<int?>("StartedQuizTeacherIdStartedQuizTeacher")
                         .HasColumnType("int");
 
                     b.Property<int?>("UserId")
@@ -136,7 +139,7 @@ namespace Quiz.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StartedQuizTeacherId");
+                    b.HasIndex("StartedQuizTeacherIdStartedQuizTeacher");
 
                     b.HasIndex("UserId");
 
@@ -145,11 +148,11 @@ namespace Quiz.Migrations
 
             modelBuilder.Entity("Quiz.Models.StartedQuizTeacher", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("IdStartedQuizTeacher")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdStartedQuizTeacher"));
 
                     b.Property<string>("CodeQuiz")
                         .IsRequired()
@@ -167,7 +170,7 @@ namespace Quiz.Migrations
                     b.Property<int>("TeacherId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("IdStartedQuizTeacher");
 
                     b.HasIndex("QuizId");
 
@@ -239,8 +242,8 @@ namespace Quiz.Migrations
             modelBuilder.Entity("Quiz.Models.StartedQuizStudent", b =>
                 {
                     b.HasOne("Quiz.Models.StartedQuizTeacher", "StartedQuizTeacher")
-                        .WithMany("ListStudents")
-                        .HasForeignKey("StartedQuizTeacherId");
+                        .WithMany("StartedQuizStudents")
+                        .HasForeignKey("StartedQuizTeacherIdStartedQuizTeacher");
 
                     b.HasOne("Quiz.Models.User", "UserStudent")
                         .WithMany("StartedQuizStudents")
@@ -275,7 +278,7 @@ namespace Quiz.Migrations
 
             modelBuilder.Entity("Quiz.Models.StartedQuizTeacher", b =>
                 {
-                    b.Navigation("ListStudents");
+                    b.Navigation("StartedQuizStudents");
                 });
 
             modelBuilder.Entity("Quiz.Models.User", b =>

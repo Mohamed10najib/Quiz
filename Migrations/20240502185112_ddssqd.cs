@@ -5,7 +5,7 @@
 namespace Quiz.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class ddssqd : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,11 +30,11 @@ namespace Quiz.Migrations
                 {
                     QuizId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    QuizName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    QuizName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DurationMinutes = table.Column<int>(type: "int", nullable: false),
-                    NbrQuestion = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false)
+                    DurationMinutes = table.Column<int>(type: "int", nullable: true),
+                    NbrQuestion = table.Column<int>(type: "int", nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -43,8 +43,7 @@ namespace Quiz.Migrations
                         name: "FK_Quizzes_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "UserId");
                 });
 
             migrationBuilder.CreateTable(
@@ -55,7 +54,10 @@ namespace Quiz.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     QuestionText = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     QuizId = table.Column<int>(type: "int", nullable: false),
-                    Reponse = table.Column<bool>(type: "bit", nullable: false)
+                    Response = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    suggestion1 = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    suggestion2 = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    suggestion3 = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -86,13 +88,67 @@ namespace Quiz.Migrations
                         column: x => x.QuizId,
                         principalTable: "Quizzes",
                         principalColumn: "QuizId",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Scores_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StartedQuizTeachers",
+                columns: table => new
+                {
+                    IdStartedQuizTeacher = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TeacherId = table.Column<int>(type: "int", nullable: false),
+                    QuizId = table.Column<int>(type: "int", nullable: true),
+                    CodeQuiz = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsStarted = table.Column<bool>(type: "bit", nullable: false),
+                    IsTerminated = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StartedQuizTeachers", x => x.IdStartedQuizTeacher);
+                    table.ForeignKey(
+                        name: "FK_StartedQuizTeachers_Quizzes_QuizId",
+                        column: x => x.QuizId,
+                        principalTable: "Quizzes",
+                        principalColumn: "QuizId");
+                    table.ForeignKey(
+                        name: "FK_StartedQuizTeachers_Users_TeacherId",
+                        column: x => x.TeacherId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "StartedQuizStudents",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: true),
+                    IdStartedQuizTeacher = table.Column<int>(type: "int", nullable: true),
+                    StartedQuizTeacherIdStartedQuizTeacher = table.Column<int>(type: "int", nullable: true),
+                    Score = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_StartedQuizStudents", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_StartedQuizStudents_StartedQuizTeachers_StartedQuizTeacherIdStartedQuizTeacher",
+                        column: x => x.StartedQuizTeacherIdStartedQuizTeacher,
+                        principalTable: "StartedQuizTeachers",
+                        principalColumn: "IdStartedQuizTeacher");
+                    table.ForeignKey(
+                        name: "FK_StartedQuizStudents_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId");
                 });
 
             migrationBuilder.CreateIndex(
@@ -114,6 +170,26 @@ namespace Quiz.Migrations
                 name: "IX_Scores_UserId",
                 table: "Scores",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StartedQuizStudents_StartedQuizTeacherIdStartedQuizTeacher",
+                table: "StartedQuizStudents",
+                column: "StartedQuizTeacherIdStartedQuizTeacher");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StartedQuizStudents_UserId",
+                table: "StartedQuizStudents",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StartedQuizTeachers_QuizId",
+                table: "StartedQuizTeachers",
+                column: "QuizId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_StartedQuizTeachers_TeacherId",
+                table: "StartedQuizTeachers",
+                column: "TeacherId");
         }
 
         /// <inheritdoc />
@@ -124,6 +200,12 @@ namespace Quiz.Migrations
 
             migrationBuilder.DropTable(
                 name: "Scores");
+
+            migrationBuilder.DropTable(
+                name: "StartedQuizStudents");
+
+            migrationBuilder.DropTable(
+                name: "StartedQuizTeachers");
 
             migrationBuilder.DropTable(
                 name: "Quizzes");

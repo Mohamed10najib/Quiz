@@ -12,8 +12,8 @@ using Quiz.Data;
 namespace Quiz.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20240424013915_AddSuggestionsToQuestion")]
-    partial class AddSuggestionsToQuestion
+    [Migration("20240502185112_ddssqd")]
+    partial class ddssqd
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -120,6 +120,68 @@ namespace Quiz.Migrations
                     b.ToTable("Scores");
                 });
 
+            modelBuilder.Entity("Quiz.Models.StartedQuizStudent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("IdStartedQuizTeacher")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Score")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("StartedQuizTeacherIdStartedQuizTeacher")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StartedQuizTeacherIdStartedQuizTeacher");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("StartedQuizStudents");
+                });
+
+            modelBuilder.Entity("Quiz.Models.StartedQuizTeacher", b =>
+                {
+                    b.Property<int>("IdStartedQuizTeacher")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdStartedQuizTeacher"));
+
+                    b.Property<string>("CodeQuiz")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsStarted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsTerminated")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("QuizId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TeacherId")
+                        .HasColumnType("int");
+
+                    b.HasKey("IdStartedQuizTeacher");
+
+                    b.HasIndex("QuizId");
+
+                    b.HasIndex("TeacherId");
+
+                    b.ToTable("StartedQuizTeachers");
+                });
+
             modelBuilder.Entity("Quiz.Models.User", b =>
                 {
                     b.Property<int>("UserId")
@@ -180,13 +242,54 @@ namespace Quiz.Migrations
                     b.Navigation("user");
                 });
 
+            modelBuilder.Entity("Quiz.Models.StartedQuizStudent", b =>
+                {
+                    b.HasOne("Quiz.Models.StartedQuizTeacher", "StartedQuizTeacher")
+                        .WithMany("StartedQuizStudents")
+                        .HasForeignKey("StartedQuizTeacherIdStartedQuizTeacher");
+
+                    b.HasOne("Quiz.Models.User", "UserStudent")
+                        .WithMany("StartedQuizStudents")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("StartedQuizTeacher");
+
+                    b.Navigation("UserStudent");
+                });
+
+            modelBuilder.Entity("Quiz.Models.StartedQuizTeacher", b =>
+                {
+                    b.HasOne("Quiz.Models.Quiz", "Quiz")
+                        .WithMany()
+                        .HasForeignKey("QuizId");
+
+                    b.HasOne("Quiz.Models.User", "Teacher")
+                        .WithMany("StartedQuizTeachers")
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Quiz");
+
+                    b.Navigation("Teacher");
+                });
+
             modelBuilder.Entity("Quiz.Models.Quiz", b =>
                 {
                     b.Navigation("Questions");
                 });
 
+            modelBuilder.Entity("Quiz.Models.StartedQuizTeacher", b =>
+                {
+                    b.Navigation("StartedQuizStudents");
+                });
+
             modelBuilder.Entity("Quiz.Models.User", b =>
                 {
+                    b.Navigation("StartedQuizStudents");
+
+                    b.Navigation("StartedQuizTeachers");
+
                     b.Navigation("quizzes");
                 });
 #pragma warning restore 612, 618

@@ -62,8 +62,9 @@ namespace Quiz.Controllers
                 if (isStarted)
                 {
                     Models.Quiz quiz = await _quizRepository.GetById(startedQuizTeacher.QuizId.Value);
-                   
-                    return View("QuestionPage", quiz);
+                    ViewBag.idQ = startedQuizTeacher.QuizId.Value;
+                    ViewBag.quiz = quiz;
+                    return View("QuestionPage");
                 }
 
                 return View(startedQuizTeacher); }

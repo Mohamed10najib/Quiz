@@ -36,8 +36,14 @@ namespace Quiz.Repository
         }
         public async Task<Models.Quiz> GetById(int idquiz)
         {
-            return await _context.Quizzes.Where(q => q.QuizId == idquiz).FirstOrDefaultAsync();
+            var quiz = await _context.Quizzes
+          .Include(q => q.Questions) // Include the questions related to the quiz
+          .FirstOrDefaultAsync(q => q.QuizId == idquiz);
+
+            // If the quiz is found, return its questions; otherwise, return null
+            return quiz;
         }
+      
 
         public bool Save()
         {

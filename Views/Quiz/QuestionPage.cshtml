@@ -1,8 +1,345 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    int q = ViewBag.idQ;
+   Quiz quiz = ViewBag.quiz;
+    List<Question> questionList = quiz.Questions.ToList();
 }
-@model Quiz
-<p>Quiz has been startted</p>
-<p>Quiz Name : @Model.QuizName</p>
+@section CustomStyles{
+    <style>
+        * {
+            margin: 0%;
+            padding: 0%;
+            box-sizing: border-box;
+        }
+
+        #carouselExampleControls {
+            background-color: blue;
+        }
+
+        .continer {
+            margin-top: 20px;
+        }
+
+        .continerchild {
+            background-color: rgb(0, 255, 68);
+            width: 85%;
+            background-color: rgb(46, 8, 82);
+            border-radius: 10px;
+        }
+
+        .QuestionDiv {
+            height: 250px;
+            outline: none;
+            border: 1px solid rgb(127, 127, 127);
+            border-radius: 10px;
+        }
+
+            .QuestionDiv .inputQ:focus {
+                border: 1px solid rgb(141, 21, 162);
+            }
+
+        .AnswerDiv {
+            height: 250px;
+        }
+
+        .continerchildLast {
+            width: 90%;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-check {
+            display: flex;
+            width: 220px;
+            justify-content: center;
+            height: 200px;
+            border-radius: 10px;
+            padding: 0;
+            align-items: center;
+        }
+
+        .inputQ {
+            border: none;
+            outline: none;
+            background-color: inherit;
+            text-align: center;
+            padding-top: 70px; /* Adjust based on font size */
+            padding-bottom: 5px; /* Adjust based on font size */
+            resize: none;
+            color: white;
+            font-weight: bold;
+        }
+
+            .inputQ:focus {
+                background-color: rgba(0, 0, 0, 0.2); /* Adjust the opacity as needed */
+                border-radius: 10px;
+            }
+
+        .form-check-child {
+            height: 100%;
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .qst::placeholder {
+            font-size: 24px;
+            font-weight: 500; /* Adjust the font size as needed */
+        }
+
+        .headerApp {
+            display: flex;
+            height: 60px;
+            width: 100%;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .form-select {
+            height: 35px;
+            width: 140px;
+            background-color: rgb(234, 234, 234);
+            border: none;
+            outline: none;
+        }
+
+        .divMark, .divTime {
+            height: 35px;
+            width: 140px;
+            background-color: rgb(234, 234, 234);
+            border: 1px rgb(195, 195, 195) solid;
+            align-items: center;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .headerApp div {
+            display: flex;
+            justify-content: space-around;
+            width: 40%;
+        }
+
+        .roteur {
+            height: 35px;
+            width: 60px;
+            font-size: 20px;
+            background-color: rgb(234, 234, 234);
+            outline: none;
+            border: none;
+            color: black;
+        }
+
+            .roteur:hover {
+                background-color: gray;
+            }
+
+            .roteur span {
+                font-size: larger;
+            }
+
+        .headerApp .div1 {
+            width: 20%;
+        }
+
+        .eng {
+            width: 200px;
+            height: 35px;
+            background-color: rgb(116, 40, 188);
+            outline: none;
+        }
+
+            .eng:hover {
+                background-color: rgb(101, 33, 165);
+            }
+
+        .choix {
+            width: 150px;
+        }
+
+        .clock {
+            align-items: center;
+            position: relative;
+            top: 5px;
+            left: 5px;
+            font-size: 20px;
+        }
+
+        .form-check-input:checked {
+            background-color: green;
+            width: 20px;
+            height: 20px;
+            outline: none;
+            border: none;
+            box-shadow: none;
+            border-radius: 50%;
+        }
+
+
+        .form-check-input {
+            width: 20px;
+            height: 20px;
+            outline: none;
+            border: none;
+            box-shadow: none;
+            border-radius: 50%;
+        }
+
+        .divNextAndPre {
+            width: 100%;
+            display: flex;
+            height: 100px;
+            justify-content: space-between;
+        }
+
+            .divNextAndPre div button {
+                width: 200px;
+                height: 50px;
+                border-radius: 5px;
+                outline: none;
+                border: 1px solid rgb(26, 26, 26);
+                opacity: 0.5;
+                font-weight: bold;
+                font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+                background-color: rgb(26, 24, 24);
+                color: aliceblue;
+            }
+
+                .divNextAndPre div button:hover {
+                    background-color: rgb(72, 72, 72);
+                    opacity: 1;
+                }
+    </style>
+}
+
+
+
+
+
+<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+    @for (var i=0; i < quiz.NbrQuestion; i++)
+    {
+        <div class="carousel-inner " id="Q@(i)">
+       
+            <div class="carousel-item active">
+                <div class="continer d-flex justify-content-around">
+                    <div class="continerchild continer d-flex justify-content-around">
+                        <div class="continerchildLast">
+                            <div class="QuestionDiv">
+                                <p class="w-100 h-100 inputQ  qst">@questionList[i].QuestionText</p>
+                            </div>
+
+                            <div class="AnswerDiv d-flex justify-content-around align-items-center">
+                                <div class="form-check" style="background-color: Gold;">
+                                    <input onchange="selectAnswer(this)" class="form-check-input" type="checkbox" value="" id="flexCheckChecked1" style="display: none;">
+                                    <div class="form-check-child">
+                                        <label for="flexCheckChecked1" class="w-100 h-100 inputQ  rep">  Answer 1 </label>
+                                    </div>
+                                </div>
+                                <div class="form-check" style="background-color: LavenderBlush;">
+                                    <input onchange="selectAnswer(this)" class="form-check-input" type="checkbox" value="" id="flexCheckChecked2" style="display: none;">
+                                    <div class="form-check-child">
+                                        <label for="flexCheckChecked2" class="w-100 h-100 inputQ  rep">  Answer 2 </label>
+                                    </div>
+                                </div>
+                                <div class="form-check" style="background-color: LightSeaGreen;">
+                                    <input onchange="selectAnswer(this)" class="form-check-input" type="checkbox" value="" id="flexCheckChecked3" style="display: none;">
+                                    <div class="form-check-child ">
+                                        <label for="flexCheckChecked3" class="w-100 h-100 inputQ  rep">  Answer 3 </label>
+                                    </div>
+                                </div>
+                                <div class="form-check" style="background-color:PaleTurquoise;">
+                                    <input onchange="selectAnswer(this)" class="form-check-input" type="checkbox" value="" id="flexCheckChecked4" style="display: none;">
+                                    <div class="form-check-child">
+                                        <label for="flexCheckChecked4" class="w-100 h-100 inputQ  rep">  Answer 4 </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="divNextAndPre">
+                                <div><button onclick="Back()" type="button">Back</button></div>
+                                <div id="divbtn@(i)" ><button onclick="Next()" type="button">Next</button><button style="display:none" type="submit">Submit</button></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+    </div>
+    }
+</div>
+
+ <script>
+
+
+                function selectAnswer(childElement) {
+                    var parent = childElement.parentNode;
+
+                    if (childElement.checked) {
+
+                        parent.style.border = "2px green solid";
+                        childElement.style.display = "block";
+                        childElement.style.marginRight = "10px";
+
+                    }
+                    else {
+                        childElement.style.display = "none";
+                        parent.style.border = "none";
+                        parent.style.opacity = "1";
+                    }
+
+
+                }
+
+    var count = 0;
+    var totalQuestions = @quiz.NbrQuestion;
+
+    for (var l = 0; l < totalQuestions; l++) {
+        var divQ = document.getElementById("Q" + l);
+        divQ.style.display = (l === count) ? "block" : "none";
+    }
+
+    function Next() {
+        if (count < totalQuestions - 1) {
+            count++;
+            for (var l = 0; l < totalQuestions; l++) {
+                var divQ = document.getElementById("Q" + l);
+                divQ.style.display = (l === count) ? "block" : "none";
+            }
+            if (count == totalQuestions - 1) {
+                var divbtn = document.getElementById("divbtn" + (totalQuestions - 1));
+                var listbtn = divbtn.getElementsByTagName("button");
+                listbtn[0].style.display = "none";
+                listbtn[1].style.display = "block";
+            }
+        }
+    }
+    function Back() {
+        if (count == totalQuestions - 1) {
+            var divbtn = document.getElementById("divbtn" + (totalQuestions - 1));
+            var listbtn = divbtn.getElementsByTagName("button");
+            listbtn[1].style.display = "none";
+            listbtn[0].style.display = "block";
+        }
+        if (count > 0) {
+            count--;
+            for (var l = 0; l < totalQuestions; l++) {
+                var divQ = document.getElementById("Q" + l);
+                divQ.style.display = (l === count) ? "block" : "none";
+            }
+
+           
+        }
+    }
+                var textarea = document.getElementById('multiline-input');
+
+
+                textarea.addEventListener('input', function () {
+
+                    var text = this.value.replace(/\n/g, '<br>');
+                    // Update the textarea's content
+                    this.innerHTML = text;
+                });
+            </script>
+
+            <!-- jQuery -->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+            <!-- Bootstrap JS -->
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

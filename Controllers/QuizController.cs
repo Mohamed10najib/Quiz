@@ -25,6 +25,10 @@ namespace Quiz.Controllers
         {
 
 
+            Guid uniqueId = Guid.NewGuid();
+         
+            string uniqueIdString = uniqueId.ToString();
+            ViewBag.iCodeQuiz = uniqueIdString;
             return View();
         }
         public IActionResult Index()

@@ -5,6 +5,22 @@ namespace Quiz.Models
 {
     public class StartedQuizTeacher
     {
+
+        public StartedQuizTeacher()
+        {
+          
+        }
+
+        // Parameterized constructor
+        public StartedQuizTeacher(int teacherId, int? quizId, string codeQuiz)
+        {
+            TeacherId = teacherId;
+            QuizId = quizId;
+            CodeQuiz = codeQuiz;
+            IsStarted = false;
+            IsTerminated = false;
+            ListStudents = new List<StartedQuizStudent>();
+        }
         [Key]
         public int Id { get; set; }
 

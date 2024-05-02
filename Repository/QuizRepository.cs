@@ -34,7 +34,10 @@ namespace Quiz.Repository
                 .Where(q => q.UserId == userId)
                 .ToListAsync();
         }
-
+        public async Task<Models.Quiz> GetById(int idquiz)
+        {
+            return await _context.Quizzes.Where(q => q.QuizId == idquiz).FirstOrDefaultAsync();
+        }
 
         public bool Save()
         {

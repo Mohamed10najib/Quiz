@@ -1,5 +1,6 @@
 ﻿@{
     string codeQuiz = ViewBag.iCodeQuiz;
+    int idQuiz = ViewBag.idQuiz;
 }
 @section CustomStyles {
     <style>
@@ -255,7 +256,7 @@
                                 </p>
                             </div>
                             <div class="innerdiv11113"><a href="#"><p id="codeQuiz">@codeQuiz</p></a></div>
-                            <div class="innerdiv11114"><i class="fa-solid fa-copy"></i></div>
+                            <div class="innerdiv11114">@idQuiz</div>
                         </div>
 
                     </div>

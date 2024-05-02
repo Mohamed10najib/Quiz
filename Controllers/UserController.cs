@@ -36,7 +36,7 @@ namespace Quiz.Controllers
                 ViewBag.ErrorMessage = "Invalid email address or password.";
                 return View(user);
             }
-            User user2 = await _userRepository.GetByPasswordAsync(user.Password);
+            User user2 = await _userRepository.GetByEmailAndPasswordAsync(user.Username,user.Password);
             string objetEnString = JsonConvert.SerializeObject(user2);
 
             _context.HttpContext.Session.SetString("currentUser", objetEnString);

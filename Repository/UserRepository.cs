@@ -19,6 +19,12 @@ namespace Quiz.Repository
             _context.Add(user);
             return Save();
         }
+        public async Task<User> GetByEmailAndPasswordAsync(string email, string password)
+        {
+
+            return await _context.Users.FirstOrDefaultAsync(u => u.Username == email && u.Password == password);
+
+        }
 
         public bool checkUser(User user)
         {

@@ -5,7 +5,7 @@ namespace Quiz.interfaces
     public interface IUserRepository
     {
         Task<IEnumerable<User>> GetAll();
-
+      Task<User> GetByEmailAndPasswordAsync(string email, string password);
         Task<User?> GetByIdAsync(int id);
         Task<User?> GetByPasswordAsync(String password);
 

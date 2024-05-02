@@ -15,7 +15,8 @@ namespace Quiz.Data
         public DbSet<Models.Quiz> Quizzes { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Scores> Scores { get; set; }
-       
 
+        public DbSet<StartedQuizTeacher> StartedQuizTeachers { get; set; }
+        public DbSet<StartedQuizStudent> StartedQuizStudents { get; set; }
     }
 }

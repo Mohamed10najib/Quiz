@@ -1,4 +1,5 @@
 ﻿using Microsoft.Ajax.Utilities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Quiz.Data;
@@ -12,25 +13,55 @@ namespace Quiz.Controllers
         
     {
         private readonly IQuizRepository  _quizRepository;
+        private readonly IStartedQuizRepository _StartedQuizRepository;
         private readonly IHttpContextAccessor _context;
 
-        public QuizController(IQuizRepository quizRepository, IHttpContextAccessor context)
+        public QuizController(IQuizRepository quizRepository, IHttpContextAccessor context, IStartedQuizRepository StartedQuizRepository)
         {
 
             _quizRepository = quizRepository;
+          
             _context = context;
+            _StartedQuizRepository = StartedQuizRepository;
 
         }
-        public IActionResult StartQuizByTeacher(int idQuiz)
+        public async Task<IActionResult> StartQuizByTeacher(int idQuiz)
         {
+            string userString = _context.HttpContext.Session.GetString("currentUser");
+            if (userString != null)
+            {
+                Models.User user = JsonConvert.DeserializeObject<Models.User>(userString);
+                if (user != null)
+                {
+                    Models.Quiz quiz = await _quizRepository.GetById(idQuiz);
+                    if (quiz != null)
+                    {
+                        Guid uniqueId = Guid.NewGuid();
+                        string uniqueIdString = uniqueId.ToString();
+                        StartedQuizTeacher startedQuizTeachernew = new StartedQuizTeacher(user.UserId, idQuiz, uniqueIdString);
+                        _StartedQuizRepository.AddStartedTeacher(startedQuizTeachernew);
 
-
-            Guid uniqueId = Guid.NewGuid();
-         
-            string uniqueIdString = uniqueId.ToString();
-            ViewBag.iCodeQuiz = uniqueIdString;
-            ViewBag.idQuiz = idQuiz;
-            return View();
+                        ViewBag.iCodeQuiz = uniqueIdString;
+                        ViewBag.idQuiz = idQuiz;
+                        return View();
+                    }
+                    else
+                    {
+                        // Handle case when quiz is null
+                        return NotFound(); // Or return appropriate error response
+                    }
+                }
+                else
+                {
+                    // Handle case when user is null after deserialization
+                    return BadRequest(); // Or return appropriate error response
+                }
+            }
+            else
+            {
+                // Handle case when userString is null
+                return BadRequest(); // Or return appropriate error response
+            }
         }
         public IActionResult Index()
         {

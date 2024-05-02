@@ -21,6 +21,12 @@ namespace Quiz.Controllers
             _context = context;
 
         }
+        public IActionResult StartQuizByTeacher()
+        {
+
+
+            return View();
+        }
         public IActionResult Index()
         {
             return View();

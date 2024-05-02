@@ -21,7 +21,7 @@ namespace Quiz.Controllers
             _context = context;
 
         }
-        public IActionResult StartQuizByTeacher()
+        public IActionResult StartQuizByTeacher(int idQuiz)
         {
 
 
@@ -29,6 +29,7 @@ namespace Quiz.Controllers
          
             string uniqueIdString = uniqueId.ToString();
             ViewBag.iCodeQuiz = uniqueIdString;
+            ViewBag.idQuiz = idQuiz;
             return View();
         }
         public IActionResult Index()

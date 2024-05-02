@@ -61,6 +61,16 @@ namespace Quiz.Repository
             _context.StartedQuizTeachers.Update(startedQuizTeacher);
             Save();
         }
+       public async Task<IEnumerable<StartedQuizStudent>> ListStudentQuiz(int idStartedTeacher)
+        {
+
+            var students = await _context.StartedQuizStudents
+                   .Where(s => s.IdStartedQuizTeacher == idStartedTeacher)
+                   .ToListAsync();
+
+            return students;
+
+        }
 
     }
 }

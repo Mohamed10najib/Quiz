@@ -1,7 +1,7 @@
 ﻿@{
     string codeQuiz = ViewBag.iCodeQuiz;
     int idQuiz = ViewBag.idQuiz;
-    List<StartedQuizStudent> listStudent = ViewBag.ListeStudent;
+var listStudent = ViewBag.ListeStudent;
 }
 @section CustomStyles {
     <style>
@@ -269,9 +269,18 @@
                         <div class="innerdiv1221">
                             @if (listStudent != null)
                             {
-                                <div class="participant"> <img src="217424077_1477026285970229_388319494190504811_n.jpg"> <p>Mohamed Najib</p></div>
+                                @foreach (var student in listStudent)
+                                {
+                                    <div class="participant">
+                                        <img src="217424077_1477026285970229_388319494190504811_n.jpg">
+                                        <p>@student.Username</p>
+                                    </div>
+                                }
                             }
-                            else{<p>No one </p>}
+                            else
+                            {
+                                <p>No one</p>
+                            }
                             
                         </div>
 

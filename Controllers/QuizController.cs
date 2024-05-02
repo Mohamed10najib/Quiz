@@ -15,13 +15,14 @@ namespace Quiz.Controllers
         private readonly IQuizRepository  _quizRepository;
         private readonly IStartedQuizRepository _StartedQuizRepository;
         private readonly IHttpContextAccessor _context;
+        private readonly IUserRepository _userRepository;
 
-        public QuizController(IQuizRepository quizRepository, IHttpContextAccessor context, IStartedQuizRepository StartedQuizRepository)
+        public QuizController(IQuizRepository quizRepository, IUserRepository userRepository, IHttpContextAccessor context, IStartedQuizRepository StartedQuizRepository)
         {
 
             _quizRepository = quizRepository;
-          
-            _context = context;
+            _userRepository= userRepository;
+              _context = context;
             _StartedQuizRepository = StartedQuizRepository;
 
         }
@@ -83,9 +84,15 @@ namespace Quiz.Controllers
 
                         if (startedQuizTeachernew != null)
                         {
-                            ICollection<StartedQuizStudent> students = startedQuizTeachernew.StartedQuizStudents;
+                            List<User> listeUser= new List<User>();
+                            var students = await _StartedQuizRepository.ListStudentQuiz(startedQuizTeachernew.IdStartedQuizTeacher);
+                            foreach(var s in students)
+                            {
+                                User userA = await _userRepository.GetByIdAsync(s.UserId.Value);
+                                listeUser.Add(userA);
 
-                            ViewBag.ListeStudent = students;
+                            }
+                            ViewBag.ListeStudent = listeUser;
 
 
 

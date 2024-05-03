@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Quiz.Data;
+using Quiz.Hubs;
 using Quiz.interfaces;
 using Quiz.Repository;
 
@@ -23,6 +24,7 @@ builder.Services.AddSession(option =>
 {
     option.IdleTimeout= TimeSpan.FromMinutes(120);
 });
+builder.Services.AddSignalR();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -45,5 +47,5 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-
+app.MapHub<QuizHub>("/hubs/QuizHub");
 app.Run();

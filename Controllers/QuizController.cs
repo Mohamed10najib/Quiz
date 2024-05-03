@@ -1,8 +1,10 @@
 ﻿using Microsoft.Ajax.Utilities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
 using Quiz.Data;
+using Quiz.Hubs;
 using Quiz.interfaces;
 using Quiz.Models;
 using Quiz.Repository;
@@ -12,14 +14,15 @@ namespace Quiz.Controllers
     public class QuizController : Controller
         
     {
+        private readonly IHubContext<QuizHub> _hubContext;
         private readonly IQuizRepository  _quizRepository;
         private readonly IStartedQuizRepository _StartedQuizRepository;
         private readonly IHttpContextAccessor _context;
         private readonly IUserRepository _userRepository;
 
-        public QuizController(IQuizRepository quizRepository, IUserRepository userRepository, IHttpContextAccessor context, IStartedQuizRepository StartedQuizRepository)
+        public QuizController(IHubContext<QuizHub> hubContext,IQuizRepository quizRepository, IUserRepository userRepository, IHttpContextAccessor context, IStartedQuizRepository StartedQuizRepository)
         {
-
+            _hubContext = hubContext;
             _quizRepository = quizRepository;
             _userRepository= userRepository;
               _context = context;
@@ -29,6 +32,7 @@ namespace Quiz.Controllers
 
         public async Task<IActionResult> QuizIsStarted(string QuizCode)
         {
+            await _hubContext.Clients.All.SendAsync("StudentJoinedQuiz", "mohamed", "najib");
             StartedQuizTeacher startedQuizTeacher = await _StartedQuizRepository.GetStartedQuizByCodeQuiz(QuizCode);
             startedQuizTeacher.IsStarted = true;
             _StartedQuizRepository.UpdateStartedQuizTeacher(startedQuizTeacher);

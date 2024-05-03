@@ -3,3 +3,20 @@
 <p> Wait sometimes to start quiz by your teacher</p>  
 <p>Quiz : @Model.Quiz.QuizName</p>
 <p>Quiz : @Model.Teacher.Username</p>
+<script src="~/js/signalr.js"></script>
+<script>
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl("/hubs/QuizHub") // Provide the URL of your SignalR hub
+        .build();
+
+    connection.start().then(function () {
+        console.log("Connected to SignalR hub");
+    }).catch(function (err) {
+        return console.error(err.toString());
+    });
+
+    connection.on("ReceiveMessage", function (user, message) {
+        console.log(`${user}: ${message}`);
+        // Process received message in the teacher page
+    });
+</script>

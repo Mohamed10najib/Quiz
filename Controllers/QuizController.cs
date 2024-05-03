@@ -71,6 +71,12 @@ namespace Quiz.Controllers
            
             
         }
+        [HttpPost]
+        public IActionResult SendResponses(Response res)
+        {
+
+            return View(res);
+        }
         public IActionResult RejoindreQuiz()
         {
 

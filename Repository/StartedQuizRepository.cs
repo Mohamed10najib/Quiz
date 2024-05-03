@@ -37,6 +37,19 @@ namespace Quiz.Repository
                 .Include(sqt => sqt.Quiz) 
                 .FirstOrDefaultAsync(sqt => sqt.CodeQuiz == codeQuiz);
         }
+
+        public async Task<StartedQuizStudent> GetStartedQuizStudentAsync(int userId, int startedQuizTeacherId)
+        {
+            return await _context.StartedQuizStudents
+            .Where(s => s.UserId == userId && s.IdStartedQuizTeacher == startedQuizTeacherId)
+            .FirstOrDefaultAsync();
+        }
+        public async Task<StartedQuizStudent> GetStartedQuizStudentAsyncById(int id)
+        {
+
+            return await _context.StartedQuizStudents.FindAsync(id);
+        }
+
         public bool AddStartedTeacher(Models.StartedQuizTeacher startedQuizTeacher)
         {
             try

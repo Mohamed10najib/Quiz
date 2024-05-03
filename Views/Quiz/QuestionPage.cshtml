@@ -1,7 +1,8 @@
 ﻿@{
     int q = ViewBag.idQ;
-   Quiz quiz = ViewBag.quiz;
+    Quiz quiz = ViewBag.quiz;
     List<Question> questionList = quiz.Questions.ToList();
+    var startedQuizStudentNewId = ViewBag.startedQuizStudentNewId;
 }
 @section CustomStyles{
     <style>
@@ -211,10 +212,12 @@
 
 
 
+<p>Time  :@quiz.DurationMinutes </p>
 
-
+<p>count  :  </p>
+<div id="timer"></div>
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-    <form asp-action="SendResponses" method="post">
+    <form asp-action="SendResponses" method="post" id="FormId">
     @for (var i=0; i < quiz.NbrQuestion; i++)
     {
         <div class="carousel-inner " id="Q@(i)">
@@ -253,9 +256,12 @@
                                     </div>
                                 </div>
                             </div>
+                                <input hidden value="@startedQuizStudentNewId" name="StudentQuizId" />
+                                <input hidden value="@q" name="QuizId" />
                             <div class="divNextAndPre">
                                 <div><button onclick="Back()" type="button">Back</button></div>
-                                <div id="divbtn@(i)" ><button onclick="Next()" type="button">Next</button><button style="display:none" type="submit">Submit</button></div>
+
+                                    <div id="divbtn@(i)"><button onclick="Next()" type="button">Next</button><button id="submitButton(@i)" style="display:none" type="submit">Submit</button></div>
                             </div>
                         </div>
                     </div>
@@ -267,8 +273,51 @@
     </form>
 </div>
 
- <script>
+<script>
+    function submitForm() {
+        var form = document.getElementById("FormId"); // Replace "yourFormId" with the actual id of your form
+        form.submit();
+    }
+    function startTimer(durationInSeconds) {
+        var startTime = new Date().getTime() + durationInSeconds * 1000;
 
+        // Update the timer every second (1000 milliseconds)
+        var timerInterval = setInterval(function () {
+            // Get the current time
+            var currentTime = new Date().getTime();
+
+            // Calculate the remaining time
+            var remainingTime = startTime - currentTime;
+
+            // If remaining time is less than or equal to 0, stop the timer
+            if (remainingTime <= 0) {
+                submitForm();
+                clearInterval(timerInterval);
+                document.getElementById("timer").innerText = "Time's up!";
+                
+                
+                return;
+            }
+
+            // Convert remaining milliseconds to minutes and seconds
+            var minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+
+            // Display the remaining time in the format "mm:ss"
+            var timerDisplay = padZero(minutes) + ":" + padZero(seconds);
+
+            // Update the timer display
+            document.getElementById("timer").innerText = timerDisplay;
+        }, 1000); // Update every second
+
+        // Function to add leading zero if needed
+        function padZero(num) {
+            return (num < 10 ? "0" : "") + num;
+        }
+    }
+
+    // Call the startTimer function with the duration in seconds
+    startTimer(10);
     function extractIndices(input) {
        
         var regex = /Responses\[(\d+)\]\[(\d+)\]/;
@@ -350,6 +399,7 @@
             }
         }
     }
+  
     function Back() {
         if (count == totalQuestions - 1) {
             var divbtn = document.getElementById("divbtn" + (totalQuestions - 1));

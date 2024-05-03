@@ -4,12 +4,8 @@
 @{
 }
 @model Response
-
-@foreach (var listeresp in Model.Responses)
-{
-    <p>Q1 : </p>
-    @foreach (var res in listeresp)
-    {
-        <p>@res</p>
-    }
+@{
+    int note = ViewBag.scoreN;
 }
+
+<p>@note</p>

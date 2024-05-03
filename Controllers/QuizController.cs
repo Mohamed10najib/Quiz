@@ -64,6 +64,11 @@ namespace Quiz.Controllers
                     Models.Quiz quiz = await _quizRepository.GetById(startedQuizTeacher.QuizId.Value);
                     ViewBag.idQ = startedQuizTeacher.QuizId.Value;
                     ViewBag.quiz = quiz;
+                    StartedQuizStudent startedQuizStudentNew = await _StartedQuizRepository.GetStartedQuizStudentAsync(user.UserId, startedQuizTeacher.IdStartedQuizTeacher);
+
+
+                    ViewBag.startedQuizStudentNewId = startedQuizStudentNew.Id;
+                    
                     return View("QuestionPage");
                 }
 
@@ -72,9 +77,27 @@ namespace Quiz.Controllers
             
         }
         [HttpPost]
-        public IActionResult SendResponses(Response res)
+        public async Task<IActionResult> SendResponses(Response res ,int StudentQuizId, int QuizId)
         {
-
+           
+            StartedQuizStudent studentQuizStudent = await  _StartedQuizRepository.GetStartedQuizStudentAsyncById(StudentQuizId);
+            Models.Quiz quiz = await _quizRepository.GetById(QuizId);
+            List<Question> ListeQuestions = quiz.Questions.ToList();
+            int scoreN = 0;
+            if (res != null && res.Responses != null)
+            {
+                
+                for (int i = 0; i < res.Responses.Count && i < quiz.Questions.Count; i++)
+                {
+                    if (ListeQuestions[i].Response == res.Responses[i][0])
+                    {
+                        scoreN++;
+                    }
+                }
+            }
+                ViewBag.scoreN = scoreN;
+            studentQuizStudent.Score= scoreN;
+             _StartedQuizRepository.Save();
             return View(res);
         }
         public IActionResult RejoindreQuiz()

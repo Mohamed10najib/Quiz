@@ -32,6 +32,16 @@ namespace Quiz.Controllers
             StartedQuizTeacher startedQuizTeacher = await _StartedQuizRepository.GetStartedQuizByCodeQuiz(QuizCode);
             startedQuizTeacher.IsStarted = true;
             _StartedQuizRepository.UpdateStartedQuizTeacher(startedQuizTeacher);
+           
+            Dictionary<User, int> userScores = new Dictionary<User, int>();
+            var students = await _StartedQuizRepository.ListStudentQuiz(startedQuizTeacher.IdStartedQuizTeacher);
+            foreach (StartedQuizStudent s in students)
+            {
+                User user=  await _userRepository.GetByIdAsync(s.UserId.Value);
+                userScores.Add(user, s.Score);
+              
+            }
+            ViewBag.userScores = userScores;
             return View();
         }
         public async Task<IActionResult> JoinQuizApreCode(string CodeQuiz)
@@ -43,7 +53,7 @@ namespace Quiz.Controllers
                 ViewBag.error = "The quiz has not started yet.";
                 return View("RejoindreQuiz"); }
             else {
-                if (startedQuizTeacher.IsStarted) {
+                if (startedQuizTeacher.IsTerminated) {
                      
                   ViewBag.QuizWasStarted = "We apologize, but the quiz has already started.";
 

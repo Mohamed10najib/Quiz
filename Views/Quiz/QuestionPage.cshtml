@@ -285,7 +285,18 @@
         form.submit();
     }
     function startTimer(durationInSeconds) {
-        var startTime = new Date().getTime() + durationInSeconds * 1000;
+        var startTime;
+
+        // Check if start time is stored in local storage
+        var storedStartTime = localStorage.getItem('startTime');
+        if (storedStartTime) {
+            startTime = parseInt(storedStartTime, 10);
+        } else {
+            // If no start time is stored, set the current time as the start time
+            startTime = new Date().getTime() + durationInSeconds * 1000;
+            // Store the start time in local storage
+            localStorage.setItem('startTime', startTime.toString());
+        }
 
         // Update the timer every second (1000 milliseconds)
         var timerInterval = setInterval(function () {
@@ -300,8 +311,10 @@
                 submitForm();
                 clearInterval(timerInterval);
                 document.getElementById("timer").innerText = "Time's up!";
-                
-                
+
+                // Clear the stored start time from local storage
+                localStorage.removeItem('startTime');
+
                 return;
             }
 

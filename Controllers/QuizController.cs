@@ -37,8 +37,18 @@ namespace Quiz.Controllers
         public async Task<IActionResult> JoinQuizApreCode(string CodeQuiz)
         {
             StartedQuizTeacher startedQuizTeacher = await _StartedQuizRepository.GetStartedQuizByCodeQuiz(CodeQuiz);
-            if(startedQuizTeacher == null) { return View("RejoindreQuiz"); }
+            if(startedQuizTeacher == null ) {
+
+               
+                ViewBag.error = "The quiz has not started yet.";
+                return View("RejoindreQuiz"); }
             else {
+                if (startedQuizTeacher.IsStarted) {
+                     
+                  ViewBag.QuizWasStarted = "We apologize, but the quiz has already started.";
+
+                    return View("RejoindreQuiz");
+                }
                 string userString = _context.HttpContext.Session.GetString("currentUser");
                 Models.User user = JsonConvert.DeserializeObject<Models.User>(userString);
                 bool isExist = await _StartedQuizRepository.IsJoinStudent(user.UserId,CodeQuiz);
@@ -89,10 +99,16 @@ namespace Quiz.Controllers
                 
                 for (int i = 0; i < res.Responses.Count && i < quiz.Questions.Count; i++)
                 {
-                    if (ListeQuestions[i].Response == res.Responses[i][0])
-                    {
-                        scoreN++;
+                    if (res.Responses[i].Count > 1) {
+
+                        if (ListeQuestions[i].Response == res.Responses[i][1])
+                        {
+                            scoreN++;
+                        }
+
+
                     }
+                    
                 }
             }
                 ViewBag.scoreN = scoreN;

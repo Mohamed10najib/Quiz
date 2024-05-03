@@ -250,11 +250,17 @@
                                     </div>
                                 </div>
                                 <div class="form-check" style="background-color:PaleTurquoise;">
-                                        <input name="Responses[@(i)][99]" onchange="selectAnswer(this)" class="form-check-input" type="checkbox" value="@questionList[i].suggestion2" id="flexCheckChecked4@(i)" style="display: none;">
+                                        <input selected name="Responses[@(i)][99]" onchange="selectAnswer(this)" class="form-check-input" type="checkbox" value="@questionList[i].suggestion2" id="flexCheckChecked4@(i)" style="display: none;">
                                     <div class="form-check-child">
                                         <label for="flexCheckChecked4@(i)" class="w-100 h-100 inputQ  rep">  @questionList[i].suggestion2 </label>
                                     </div>
                                 </div>
+                                    <div class="form-check" style="background-color:PaleTurquoise; display:none">
+                                        <input checked name="Responses[@(i)][0]" onchange="selectAnswer(this)" class="form-check-input" type="checkbox" value="Undifiend" id="flexCheckChecked44" style="display: none;">
+                                        <div class="form-check-child">
+                                            <label for="flexCheckChecked44" class="w-100 h-100 inputQ  rep">  </label>
+                                        </div>
+                                    </div>
                             </div>
                                 <input hidden value="@startedQuizStudentNewId" name="StudentQuizId" />
                                 <input hidden value="@q" name="QuizId" />
@@ -343,7 +349,7 @@
         var valueI = extractIndices(name).i;
         if (childElement.checked) {
             childElement.name = "Responses[" +valueI+"][33]";
-            var m = 0; 
+            var m = 1; 
             for (var l = 0; l < 4; l++) {
                 var t = l + 1;
                 let inputcheck = document.getElementById(`flexCheckChecked${t}${valueI}`);
@@ -359,7 +365,7 @@
             childElement.style.marginRight = "10px";
         } else {
             childElement.name = "Responses[" + valueI + "][99]";
-            var m = 0; // Declare m outside the loop
+            var m = 1; // Declare m outside the loop
             for (var l = 0; l < 4; l++) {
                 var t = l + 1;
                 let inputcheck = document.getElementById(`flexCheckChecked${t}${valueI}`);

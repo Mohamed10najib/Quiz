@@ -2,7 +2,29 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    string QuizWasStarted;
+    if (ViewBag.QuizWasStarted!=null){
+
+         QuizWasStarted = ViewBag.QuizWasStarted;
+    }
+    else{
+
+         QuizWasStarted ="";
+    }
+    string error;
+    if (ViewBag.error != null)
+    {
+
+         error = ViewBag.error;
+    }
+    else
+    {
+
+         error = "";
+    }
 }
+<p >@error</p>
+<p>@QuizWasStarted</p>
 <form asp-action="JoinQuizApreCode">
 
     <p>Entre a quiz </p>

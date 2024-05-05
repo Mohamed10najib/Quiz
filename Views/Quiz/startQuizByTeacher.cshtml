@@ -1,9 +1,12 @@
 ﻿@{
     string codeQuiz = ViewBag.iCodeQuiz;
     int idQuiz = ViewBag.idQuiz;
-var listStudent = ViewBag.ListeStudent;
+    var listStudent = ViewBag.ListeStudent;
+  
 }
+
 @section CustomStyles {
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         * {
             margin: 0;
@@ -13,6 +16,15 @@ var listStudent = ViewBag.ListeStudent;
             -ms-overflow-style: none;
         }
 
+        #copybtn {
+            width: 80px;
+            height: 80px;
+          /* Make border-radius 50% to create a circular button */
+            border: none; /* Remove border */
+            background-color: transparent; /* Example background color */
+            color: #fff; /* Example text color */
+            cursor: pointer; /* Change cursor to pointer on hover */
+        }
         .header {
             height: 55px;
             background-color: rgb(197, 197, 197);
@@ -175,7 +187,7 @@ var listStudent = ViewBag.ListeStudent;
         }
 
         #codeQuiz {
-            font-size: 30px;
+            font-size: 20px;
         }
 
         .comm {
@@ -215,15 +227,25 @@ var listStudent = ViewBag.ListeStudent;
                 font-weight: bold;
                 margin-left: 20px;
             }
+
+        body {
+            background-color: rgb(33, 33, 33);
+        }
     </style>
 }
+
+
+
+
+
+<form asp-action="QuizIsStarted">
 <div>
     <div class="header">
-        <div>Titre QuizApp</div>
-        <div> Duration QuizApp</div>
-        <div> Prof Name QuizApp</div>
-        <div> Question Number</div>
-        <div> quit QuizApp</div>
+            <div></div>
+            <div> Duration :  min</div>
+            <div> teacher : </div>
+            <div> Question Number : </div>
+            <div> <button type="button">quit QuizApp</button></div>
 
     </div>
     <div class="continerQuiz">
@@ -243,8 +265,8 @@ var listStudent = ViewBag.ListeStudent;
                                     quel appareil
                                 </p>
                             </div>
-                            <div class="innerdiv11113"><a href="#"><p>join_my_quiz.com</p></a></div>
-                            <div class="innerdiv11114"><i class="fa-solid fa-copy"></i></div>
+                                <div class="innerdiv11113"><a href="http://localhost:5259/Quiz/RejoindreQuiz"><p>Page to join the quiz.</p></a></div>
+                                <div class="innerdiv11114"><button id="copybtn" type="button" onclick="copyFunctionLien()" title="Copy"> <i style="font-size:24px" class="fa">&#xf0c5;</i></button></div>
                         </div>
                         <div class="innerdiv1112">
 
@@ -256,16 +278,23 @@ var listStudent = ViewBag.ListeStudent;
                                     rejoindre le code
                                 </p>
                             </div>
-                            <div class="innerdiv11113"><a href="#"><p id="codeQuiz">@codeQuiz</p></a></div>
-                            <div class="innerdiv11114">@idQuiz</div>
+                                <div class="innerdiv11113">
+                                    <p id="codeQuiz">@codeQuiz</p><button id="copybtn" type="button" onclick="copyFunction()" title="Copy"> <i style="font-size:24px" class="fa">&#xf0c5;</i></button>
+                                </div>
+                           
                         </div>
 
                     </div>
-                    <div class="innerdiv112"><div><<form asp-action="QuizIsStarted" >
-                                <input hidden name="QuizCode" value="@codeQuiz" />
-                        <button type="submit" class="btn comm btn-primary">Commencer</button>
-                        
-                    </form></div></div>
+                    <input hidden name="QuizCode" value="@codeQuiz" />
+                    <div class="innerdiv112">
+                        <div>
+                          
+                              
+                                <button type="submit" class="btn comm btn-primary">Commencer</button>
+
+                          
+                        </div>
+                    </div>
                 </div>
                 <div class="innerdiv12">
                     <div class="innerdiv121"><p>Les participants</p></div>
@@ -285,7 +314,6 @@ var listStudent = ViewBag.ListeStudent;
                             {
                                 <p>No one</p>
                             }
-                            
                         </div>
 
                     </div>
@@ -296,23 +324,40 @@ var listStudent = ViewBag.ListeStudent;
     </div>
 
 </div>
+  </form>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="~/js/signalr.js"></script>
 <script>
-    const connection = new signalR.HubConnectionBuilder()
-        .withUrl("/hubs/QuizHub") // Provide the URL of your SignalR hub
-        .build();
+    function copyFunction() {
+        // Get the text content of the element with id "codeQuiz"
+        var codeQuizText = document.getElementById("codeQuiz").innerText;
 
+        // Use navigator.clipboard.writeText to copy the text to the clipboard
+        navigator.clipboard.writeText(codeQuizText)
+            .then(() => {
+                // Notify the user that the text has been copied
+               
+            })
+            .catch((error) => {
+                // Handle any errors that may occur during copying
+                console.error('Failed to copy text: ', error);
+            });
+    }
+    function copyFunctionLien() {
 
-    connection.start().then(function () {
-        console.log("Connected to SignalR hub");
-    }).catch(function (err) {
-        return console.error(err.toString());
-    });
+        var codeQuizText = "http://localhost:5259/Quiz/RejoindreQuiz";
 
+        // Use navigator.clipboard.writeText to copy the text to the clipboard
+        navigator.clipboard.writeText(codeQuizText)
+            .then(() => {
+                // Notify the user that the text has been copied
 
-    connection.on("ReceiveMessage", function (user, message) {
-        console.log(`${user}: ${message}`);
-       
-    });
+            })
+            .catch((error) => {
+                // Handle any errors that may occur during copying
+                console.error('Failed to copy text: ', error);
+            });
+
+    }
 </script>

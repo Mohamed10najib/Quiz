@@ -33,7 +33,6 @@ namespace Quiz.Controllers
 
         public async Task<IActionResult> QuizIsStarted(string QuizCode)
         {
-            await _hubContext.Clients.All.SendAsync("StudentJoinedQuiz", "mohamed", "najib");
             StartedQuizTeacher startedQuizTeacher = await _StartedQuizRepository.GetStartedQuizByCodeQuiz(QuizCode);
             startedQuizTeacher.IsStarted = true;
             _StartedQuizRepository.UpdateStartedQuizTeacher(startedQuizTeacher);
@@ -62,7 +61,7 @@ namespace Quiz.Controllers
             else {
                 if (startedQuizTeacher.IsTerminated) {
                      
-                  ViewBag.QuizWasStarted = "We apologize, but the quiz has already started.";
+                  ViewBag.error = "We apologize, but the quiz has already started.";
 
                     return View("RejoindreQuiz");
                 }
@@ -88,7 +87,7 @@ namespace Quiz.Controllers
                 StartedQuizStudent startedQuizStudentNew1 = await _StartedQuizRepository.GetStartedQuizStudentAsync(user.UserId, startedQuizTeacher.IdStartedQuizTeacher);
                 if (startedQuizStudentNew1.started)
                 {
-                    ViewBag.QuizWasStarted = "not possible  .";
+                    ViewBag.error = "It's not possible, you have already passed this quiz.";
 
                     return View("RejoindreQuiz");
                 }
@@ -194,7 +193,7 @@ namespace Quiz.Controllers
                         }
                         ViewBag.iCodeQuiz = uniqueIdString;
                         ViewBag.idQuiz = idQuiz;
-
+                       
                         return View();
                     }
                     else

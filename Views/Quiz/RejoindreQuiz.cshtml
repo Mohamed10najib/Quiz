@@ -1,6 +1,63 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@section CustomStyles{
+    <style>
+.divC{background-color: rgb(57, 57, 56);}
+
+.custom-list {
+    margin-top: 100px;
+    max-height: 380px; /* Set the maximum height for the list */
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+.divfC{background-color: rgb(57, 57, 56);
+display: flex;
+align-items: center;
+}
+.divfd{display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+background-color: rgb(78, 77, 77);
+border-radius: 5px;
+width: 600px;
+height: 250px;
+border: 2px rgb(141, 141, 141) solid;
+}
+body{background-color: rgb(33, 33, 33);}
+.dd{background-color: rgb(33, 33, 33);}
+.btn{margin-top: 15px;
+}
+.divdivfd{
+width: 90%;
+display:flex ;
+height: auto;
+justify-content: space-around;
+align-items: center;
+}
+.inputCode , .regbtn{width: 95%;
+height: 40px;
+border-radius: 5px;
+text-align: center;
+}
+#paragraph{font-style: italic;
+font-weight: bold;
+font-size: 20px;
+color: rgb(175, 175, 175);
+}
+.regbtn{
+outline: none;
+border: none;
+width: 40%;
+}
+.inputdiv{display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    }
+    .textError{color: red;
+    font-style: italic;
+    }
+    </style>}
 @{
     string QuizWasStarted;
     if (ViewBag.QuizWasStarted!=null){
@@ -23,13 +80,33 @@
          error = "";
     }
 }
-<p >@error</p>
-<p>@QuizWasStarted</p>
+
+
+
 <form asp-action="JoinQuizApreCode">
+<div class="container divC d-flex justify-content-center  vh-100">
 
-    <p>Entre a quiz </p>
-    <input  name="CodeQuiz" type="text" />
+    <div class="w-75 dd d-flex justify-content-center ">
 
-    <button type="submit" >Join </button>
 
+        <div class="divfC">
+            <div class="divfd">
+                <div class="divdivfd"><p id="paragraph">Quiz Code</p></div>
+                <div class="divdivfd inputdiv">
+                        <input name="CodeQuiz" placeholder="Please write the quiz code." class="inputCode" type="text">
+                        @if (@error != "")
+                        {
+                            <p class="textError">@error</p>
+                        }
+                   
+                </div>
+                    <div class="divdivfd"><button type="button" class="regbtn btn btn-danger">Back</button><button class="regbtn btn btn-primary" type="submit">Join</button></div>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
 </form>
+<p>@QuizWasStarted</p>

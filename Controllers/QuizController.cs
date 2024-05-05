@@ -8,6 +8,7 @@ using Quiz.Hubs;
 using Quiz.interfaces;
 using Quiz.Models;
 using Quiz.Repository;
+using System.Collections.Generic;
 
 namespace Quiz.Controllers
 {
@@ -37,12 +38,14 @@ namespace Quiz.Controllers
             startedQuizTeacher.IsStarted = true;
             _StartedQuizRepository.UpdateStartedQuizTeacher(startedQuizTeacher);
            
-            Dictionary<User, int> userScores = new Dictionary<User, int>();
+            Dictionary<User, Dictionary<int,bool>> userScores = new Dictionary<User, Dictionary<int, bool>>();
             var students = await _StartedQuizRepository.ListStudentQuiz(startedQuizTeacher.IdStartedQuizTeacher);
             foreach (StartedQuizStudent s in students)
             {
+                Dictionary<int, bool> quizScores = new Dictionary<int, bool>();
+                quizScores.Add(s.Score,s.terminate);
                 User user=  await _userRepository.GetByIdAsync(s.UserId.Value);
-                userScores.Add(user, s.Score);
+                userScores.Add(user, quizScores);
               
             }
             ViewBag.userScores = userScores;
@@ -82,18 +85,28 @@ namespace Quiz.Controllers
 
 
                 }
+                StartedQuizStudent startedQuizStudentNew1 = await _StartedQuizRepository.GetStartedQuizStudentAsync(user.UserId, startedQuizTeacher.IdStartedQuizTeacher);
+                if (startedQuizStudentNew1.started)
+                {
+                    ViewBag.QuizWasStarted = "not possible  .";
+
+                    return View("RejoindreQuiz");
+                }
+
                 var isStarted = startedQuizTeacher.IsStarted;
                 if (isStarted)
                 {
+                    StartedQuizStudent startedQuizStudentNew = await _StartedQuizRepository.GetStartedQuizStudentAsync(user.UserId, startedQuizTeacher.IdStartedQuizTeacher);
+                    startedQuizStudentNew.started = true;
+                    _StartedQuizRepository.Save();
                     Models.Quiz quiz = await _quizRepository.GetById(startedQuizTeacher.QuizId.Value);
                     ViewBag.idQ = startedQuizTeacher.QuizId.Value;
                     ViewBag.quiz = quiz;
-                    StartedQuizStudent startedQuizStudentNew = await _StartedQuizRepository.GetStartedQuizStudentAsync(user.UserId, startedQuizTeacher.IdStartedQuizTeacher);
-
-
+                 
                     ViewBag.startedQuizStudentNewId = startedQuizStudentNew.Id;
                     
                     return View("QuestionPage");
+                    
                 }
 
                 return View(startedQuizTeacher); }
@@ -105,6 +118,7 @@ namespace Quiz.Controllers
         {
            
             StartedQuizStudent studentQuizStudent = await  _StartedQuizRepository.GetStartedQuizStudentAsyncById(StudentQuizId);
+            studentQuizStudent.terminate = true;
             Models.Quiz quiz = await _quizRepository.GetById(QuizId);
             List<Question> ListeQuestions = quiz.Questions.ToList();
             int scoreN = 0;
@@ -126,6 +140,7 @@ namespace Quiz.Controllers
                 }
             }
                 ViewBag.scoreN = scoreN;
+
             studentQuizStudent.Score= scoreN;
              _StartedQuizRepository.Save();
             return View(res);

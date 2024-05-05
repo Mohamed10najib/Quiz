@@ -12,7 +12,8 @@ namespace Quiz.Models
             UserId = _UserId;
             IdStartedQuizTeacher = _StartedQuizTeacherId;
             Score = 0;
-
+            terminate=false;
+            started=false;
         }
         [Key]
         public int Id { get; set; }
@@ -27,5 +28,7 @@ namespace Quiz.Models
         public StartedQuizTeacher? StartedQuizTeacher { get; set; }
 
         public int Score { get; set; }
+        public bool terminate { get; set; }
+       public bool  started { get; set; }
     }
 }

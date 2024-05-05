@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Quiz.Data;
 
@@ -11,9 +12,11 @@ using Quiz.Data;
 namespace Quiz.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240505142627_newww")]
+    partial class newww
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -134,9 +137,6 @@ namespace Quiz.Migrations
 
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("started")
-                        .HasColumnType("bit");
 
                     b.Property<bool>("terminate")
                         .HasColumnType("bit");

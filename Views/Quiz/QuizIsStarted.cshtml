@@ -1,22 +1,130 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@section CustomStyles{
+
+    <style>
+        .custom-list {
+            margin-top: 100px;
+            max-height: 380px; /* Set the maximum height for the list */
+            overflow-y: auto; /* Enable vertical scrolling */
+        }
+
+            .custom-list::-webkit-scrollbar {
+                width: 0; /* Set width to 0 to hide scrollbar */
+            }
+
+        /* Optional: If you want to hide scrollbar for Firefox */
+        .custom-list {
+            scrollbar-width: none; /* For Firefox */
+        }
+
+        .status {
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .Terminate {
+            color: red;
+        }
+
+        .NotTerminate {
+            color: green;
+        }
+    </style>
+}
 @{
-    Dictionary<User, int> userScores = ViewBag.userScores;
+    Dictionary<User, Dictionary<int, bool>> userScores = ViewBag.userScores;
     
 }
-<p>Quiz Status:</p>
+
 @if (userScores != null && userScores.Count > 0)
 {
-    @foreach (var pair in userScores)
-    {
-        <p>
-            <span>@pair.Key.Username</span>
-            <span>Score: @pair.Value</span>
-        </p>
-    }
+
+
+
+   
+       
+        
+    
+    
+                
+               
+               
+                
+
+       
+ 
+
+
+
+    <div class="container divC d-flex justify-content-center  vh-100">
+
+        <div class="w-75 dd">
+            <ul class="list-group custom-list">
+                <li class=" list-group-item d-flex justify-content-between align-items-center active">
+                    <span class="badge bg-danger rounded-pill">Range</span>
+                    Liste des participants
+                    <span class="badge bg-danger rounded-pill">Score</span>
+                </li>
+
+                @foreach (var pair in userScores)
+                {
+
+
+                   
+                    @foreach (var t in pair.Value)
+                    {
+
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+
+                            <span class="badge bg-primary rounded-pill">1</span>
+                           
+                            <div class="font-monospace">
+                                <p>@pair.Key.Username</p>
+                                @if (t.Value)
+                                {
+                                    <p class="status Terminate">Terminated</p>
+                                }
+                                else
+                                {
+                                    <p class="status NotTerminate">Not Terminated</p>
+                                }
+
+                            </div>
+
+                            <span class="badge bg-primary rounded-pill">@t.Key</span>
+                        </li>
+
+
+
+                    }
+                }
+                                       
+
+
+            </ul>
+        </div>
+    </div>
+
 }
 else
-{
-    <p>The quiz has not started yet.</p>
+{    <div class="container divC d-flex justify-content-center  vh-100">
+        <div class="w-75 dd">
+            <ul class="list-group custom-list">
+                <li class=" list-group-item d-flex justify-content-between align-items-center active">
+                    <span class="badge bg-danger rounded-pill">Range</span>
+                    Liste des participants
+                    <span class="badge bg-danger rounded-pill">Score</span>
+                </li>
+              
+                    <li class=" list-group-item d-flex justify-content-around align-items-center ">
+
+                       
+                    No one exists.
+                       
+                     
+                    </li>
+            </ul>
+        </div>
+
+</div>
+   
 }

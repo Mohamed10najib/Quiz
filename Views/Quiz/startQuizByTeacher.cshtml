@@ -2,9 +2,8 @@
     string codeQuiz = ViewBag.iCodeQuiz;
     int idQuiz = ViewBag.idQuiz;
     var listStudent = ViewBag.ListeStudent;
-  
+   
 }
-
 @section CustomStyles {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
@@ -214,6 +213,8 @@
             padding-bottom: 5px;
             display: flex;
             align-items: center;
+         
+            justify-content: space-around;
         }
 
             .participant img {
@@ -226,11 +227,26 @@
             .participant p {
                 font-weight: bold;
                 margin-left: 20px;
+                margin-top: 10px;
+           
             }
 
         body {
             background-color: rgb(33, 33, 33);
         }
+
+        .btndelete {
+            width: 40px;
+            height: 40px;
+            font-style: italic;
+            background-color: transparent;
+            border: none;
+            color: rgb(147, 9, 9);
+        }
+
+            .btndelete:hover {
+                color: rgb(232, 13, 13);
+            }
     </style>
 }
 
@@ -238,16 +254,25 @@
 
 
 
-<form asp-action="QuizIsStarted">
-<div>
-    <div class="header">
-            <div></div>
-            <div> Duration :  min</div>
-            <div> teacher : </div>
-            <div> Question Number : </div>
-            <div> <button type="button">quit QuizApp</button></div>
 
-    </div>
+<div>
+        <div class="header">
+            @if (ViewBag.myquiz != null)
+            {
+                <div>@ViewBag.myquiz.QuizName</div>
+                <div> Duration: @ViewBag.myquiz.DurationMinutes min</div>
+                <div> Teacher: @(ViewBag.myquiz.user != null ? ViewBag.myquiz.user.Username : "Unknown")</div>
+                <div> Question Number: @ViewBag.myquiz.NbrQuestion</div>
+                <div>
+                    <a href="@Url.Action("Quizzes", "Quiz")" class="btn btn-danger">Quit QuizApp</a>
+                </div>
+            }
+            else
+            {
+                <div>Quiz not found</div>
+            }
+        </div>
+
     <div class="continerQuiz">
         <div class="innerdiv">
 
@@ -285,6 +310,7 @@
                         </div>
 
                     </div>
+                    <form asp-action="QuizIsStarted">
                     <input hidden name="QuizCode" value="@codeQuiz" />
                     <div class="innerdiv112">
                         <div>
@@ -295,6 +321,7 @@
                           
                         </div>
                     </div>
+                    </form>
                 </div>
                 <div class="innerdiv12">
                     <div class="innerdiv121"><p>Les participants</p></div>
@@ -307,6 +334,16 @@
                                     <div class="participant">
                                         <img src="217424077_1477026285970229_388319494190504811_n.jpg">
                                         <p>@student.Username</p>
+                                        <div>
+                                            <form asp-action="DeleteParticipant" method="post">
+                                                <button class="btndelete" type="submit">X</button>
+                                                <input hidden name="UserId" value="@student.UserId" />
+                                                <input hidden name="codeQuiz" value="@codeQuiz" />
+                                                <input hidden name="IdQuiz" value="@idQuiz" />
+                                                <input hidden name="TeacherQuizStartedId" value="@ViewBag.idTeacher" />
+                                            </form>
+                                        </div>
+                                           
                                     </div>
                                 }
                             }
@@ -324,7 +361,7 @@
     </div>
 
 </div>
-  </form>
+ 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="~/js/signalr.js"></script>

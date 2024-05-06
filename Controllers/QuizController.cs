@@ -41,10 +41,14 @@ namespace Quiz.Controllers
             var students = await _StartedQuizRepository.ListStudentQuiz(startedQuizTeacher.IdStartedQuizTeacher);
             foreach (StartedQuizStudent s in students)
             {
-                Dictionary<int, bool> quizScores = new Dictionary<int, bool>();
-                quizScores.Add(s.Score,s.terminate);
-                User user=  await _userRepository.GetByIdAsync(s.UserId.Value);
-                userScores.Add(user, quizScores);
+                if (!s.IsRefused)
+                {
+                    Dictionary<int, bool> quizScores = new Dictionary<int, bool>();
+                    quizScores.Add(s.Score, s.terminate);
+                    User user = await _userRepository.GetByIdAsync(s.UserId.Value);
+                    userScores.Add(user, quizScores);
+                }
+               
               
             }
             ViewBag.userScores = userScores;
@@ -71,6 +75,7 @@ namespace Quiz.Controllers
                 if (!isExist)
                 {
                     StartedQuizStudent startedQuizStudent = new StartedQuizStudent(user.UserId, startedQuizTeacher.TeacherId);
+                   
                     if (startedQuizTeacher.StartedQuizStudents == null)
                     {
                         
@@ -88,6 +93,12 @@ namespace Quiz.Controllers
                 if (startedQuizStudentNew1.started)
                 {
                     ViewBag.error = "It's not possible, you have already passed this quiz.";
+
+                    return View("RejoindreQuiz");
+                }
+                if (startedQuizStudentNew1.IsRefused)
+                {
+                    ViewBag.error = "you are refused to joined to this Quiz ";
 
                     return View("RejoindreQuiz");
                 }
@@ -139,7 +150,7 @@ namespace Quiz.Controllers
                 }
             }
                 ViewBag.scoreN = scoreN;
-
+            ViewBag.bestMark = quiz.Questions.Count;
             studentQuizStudent.Score= scoreN;
              _StartedQuizRepository.Save();
             return View(res);
@@ -159,8 +170,10 @@ namespace Quiz.Controllers
                 {
                     StartedQuizTeacher startedQuizTeachernew;
                     Models.Quiz quiz = await _quizRepository.GetById(idQuiz);
+                   
                     if (quiz != null)
                     {
+                        ViewBag.myquiz = quiz;
                         bool isExist = await _StartedQuizRepository.IsExistStartedQuizByCodeQuiz(uniqueIdString);
                         if (!isExist) {
                              startedQuizTeachernew = new StartedQuizTeacher(user.UserId, idQuiz, uniqueIdString);
@@ -176,12 +189,18 @@ namespace Quiz.Controllers
                             var students = await _StartedQuizRepository.ListStudentQuiz(startedQuizTeachernew.IdStartedQuizTeacher);
                             foreach(var s in students)
                             {
-                                User userA = await _userRepository.GetByIdAsync(s.UserId.Value);
-                                listeUser.Add(userA);
+                                if (!s.IsRefused)
+                                {
+                                    User userA = await _userRepository.GetByIdAsync(s.UserId.Value);
+                                    listeUser.Add(userA);
+                                }
+                                   
+                              
+                               
 
                             }
                             ViewBag.ListeStudent = listeUser;
-
+                        
 
 
 
@@ -192,8 +211,12 @@ namespace Quiz.Controllers
                             ViewBag.ListeStudent = null;
                         }
                         ViewBag.iCodeQuiz = uniqueIdString;
-                        ViewBag.idQuiz = idQuiz;
+                     
                        
+                        ViewBag.idQuiz = idQuiz;
+                        ViewBag.idTeacher = startedQuizTeachernew.IdStartedQuizTeacher;
+
+
                         return View();
                     }
                     else
@@ -213,6 +236,16 @@ namespace Quiz.Controllers
                 // Handle case when userString is null
                 return BadRequest(); // Or return appropriate error response
             }
+        }
+        [HttpPost]
+        public async Task<IActionResult> DeleteParticipant(int TeacherQuizStartedId ,int UserId , string codeQuiz ,int IdQuiz)
+        {
+         StartedQuizStudent s = await   _StartedQuizRepository.GetStartedQuizStudentAsync(UserId, TeacherQuizStartedId);
+            s.IsRefused = true;
+            _StartedQuizRepository.Save();
+
+            return  RedirectToAction("StartQuizByTeacher", new { idQuiz = IdQuiz, uniqueIdString = codeQuiz });
+            ;
         }
         public IActionResult Index()
         {

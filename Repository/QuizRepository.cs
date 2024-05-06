@@ -37,13 +37,14 @@ namespace Quiz.Repository
         public async Task<Models.Quiz> GetById(int idquiz)
         {
             var quiz = await _context.Quizzes
-          .Include(q => q.Questions) // Include the questions related to the quiz
-          .FirstOrDefaultAsync(q => q.QuizId == idquiz);
+                .Include(q => q.Questions) // Include the questions related to the quiz
+                .Include(q => q.user)      // Include the user related to the quiz
+                .FirstOrDefaultAsync(q => q.QuizId == idquiz);
 
-            // If the quiz is found, return its questions; otherwise, return null
+            // If the quiz is found, return it; otherwise, return null
             return quiz;
         }
-      
+
 
         public bool Save()
         {

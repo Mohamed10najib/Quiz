@@ -1,6 +1,121 @@
 ﻿@model StartedQuizTeacher
 
-<p> Wait sometimes to start quiz by your teacher</p>  
-<p>Quiz : @Model.Quiz.QuizName</p>
-<p>Quiz : @Model.Teacher.Username</p>
+@section CustomStyles {
+    <style>
 
+                              .divC {
+                                  background-color: rgb(57, 57, 56);
+                              }
+
+                              .custom-list {
+                                  margin-top: 100px;
+                                  max-height: 380px; /* Set the maximum height for the list */
+                                  overflow-y: auto; /* Enable vertical scrolling */
+                              }
+
+                              .divfC {
+                                  background-color: rgb(57, 57, 56);
+                                  display: flex;
+                                  align-items: center;
+                              }
+
+                              .divfd {
+                                  display: flex;
+                                  flex-direction: column;
+                                  align-items: center;
+                                  justify-content: space-around;
+                                  background-color: rgb(78, 77, 77);
+                                  border-radius: 5px;
+                                  width: 600px;
+                                  height: 250px;
+                                  border: 2px rgb(141, 141, 141) solid;
+                              }
+
+                              body {
+                                  background-color: rgb(33, 33, 33);
+                              }
+
+                              .dd {
+                                  background-color: rgb(33, 33, 33);
+                              }
+
+                              .btn {
+                                  margin-top: 15px;
+                              }
+
+                              .divdivfd {
+                                  width: 90%;
+                                  display: flex;
+                                  height: auto;
+                                  justify-content: space-around;
+                                  align-items: center;
+                              }
+
+                              .inputCode, .regbtn {
+                                  width: 95%;
+                                  height: 40px;
+                                  border-radius: 5px;
+                                  text-align: center;
+                              }
+
+                              #paragraph {
+                                  font-style: italic;
+                                  font-weight: bold;
+                                  font-size: 20px;
+                                  color: rgb(175, 175, 175);
+                              }
+
+                              .regbtn {
+                                  outline: none;
+                                  border: none;
+                                  width: 40%;
+                              }
+
+                              .inputdiv {
+                                  display: flex;
+                                  flex-direction: column;
+                                  justify-content: space-around;
+                              }
+
+                              .textError {
+                                  color: red;
+                                  font-style: italic;
+                              }
+
+                              #message {
+                                  font-weight: bold;
+                                  font-size: 15px;
+                                  color: rgb(175, 175, 175);
+                              }
+
+                              #NameTeacher {
+                                  font-weight: bold;
+                                  font-size: 15px;
+                                  color: rgb(209, 209, 209);
+                                  font-style: italic;
+                              }
+    </style>
+}
+<div class="container divC d-flex justify-content-center  vh-100">
+
+    <div class="w-75 dd d-flex justify-content-center ">
+
+
+        <div class="divfC">
+            <div class="divfd">
+                <div class="divdivfd"><p id="paragraph">Quiz </p></div>
+                <div class="divdivfd"><p id="message">Quiz Titre :<span id="NameTeacher"> @Model.Quiz.QuizName</span>.</p></div>
+
+                <div class="divdivfd"><p id="message">Please wait for your teacher,<span id="NameTeacher">  @Model.Teacher.Username</span>, to start the quiz.</p></div>
+                <div class="divdivfd">
+                    <a href="@Url.Action("RejoindreQuiz", "Quiz")" class=" regbtn btn btn-danger">Back</a>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

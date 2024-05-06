@@ -14,6 +14,7 @@ namespace Quiz.Models
             Score = 0;
             terminate=false;
             started=false;
+            IsRefused=false;
         }
         [Key]
         public int Id { get; set; }
@@ -30,5 +31,6 @@ namespace Quiz.Models
         public int Score { get; set; }
         public bool terminate { get; set; }
        public bool  started { get; set; }
+        public bool IsRefused { get; set; }
     }
 }

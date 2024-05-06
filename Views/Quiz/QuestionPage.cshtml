@@ -212,10 +212,18 @@
 
 
 
-<p>Time  :@quiz.DurationMinutes </p>
 
-<p>count  :  </p>
-<div id="timer"></div>
+
+
+
+<div class="headerApp">
+    <div>Quiz Name :@quiz.QuizName</div>
+    <div>Duration : @quiz.DurationMinutes</div>
+    <div>Rest Time  : <div id="timer"></div></div>
+    <div> Number Of  Questions : @quiz.NbrQuestion </div>
+  
+    <div> <button class="btn btn-danger">Exit</button></div>
+</div>
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
     <form asp-action="SendResponses" method="post" id="FormId">
     @for (var i=0; i < quiz.NbrQuestion; i++)
@@ -336,7 +344,7 @@
     }
 
     // Call the startTimer function with the duration in seconds
-    startTimer(10);
+    startTimer(@quiz.DurationMinutes*60);
     function extractIndices(input) {
        
         var regex = /Responses\[(\d+)\]\[(\d+)\]/;

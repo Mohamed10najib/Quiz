@@ -310,13 +310,13 @@
                         </div>
 
                     </div>
-                    <form asp-action="QuizIsStarted">
+                    <form asp-action="QuizIsStarted" id="form1">
                     <input hidden name="QuizCode" value="@codeQuiz" />
                     <div class="innerdiv112">
                         <div>
                           
                               
-                                <button type="submit" class="btn comm btn-primary">Commencer</button>
+                                <button type="submit"  class="btn comm btn-primary">Commencer</button>
 
                           
                         </div>
@@ -332,7 +332,7 @@
                                 @foreach (var student in listStudent)
                                 {
                                     <div class="participant">
-                                        <img src="217424077_1477026285970229_388319494190504811_n.jpg">
+                                        <img src="~/0ce956b2-9787-4756-a580-299568810730.png">
                                         <p>@student.Username</p>
                                         <div>
                                             <form asp-action="DeleteParticipant" method="post">
@@ -361,11 +361,23 @@
     </div>
 
 </div>
- 
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<script src="~/js/signalr.js"></script>
 <script>
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl("/QuizHub") // Specify the URL of your SignalR hub
+        .build();
+
+    // Start the SignalR connection
+    connection.start()
+        .then(function () {
+            console.log("SignalR connected.");
+        })
+        .catch(function (err) {
+            return console.error(err.toString());
+        });
+    // Define copyFunction
     function copyFunction() {
         // Get the text content of the element with id "codeQuiz"
         var codeQuizText = document.getElementById("codeQuiz").innerText;
@@ -374,27 +386,58 @@
         navigator.clipboard.writeText(codeQuizText)
             .then(() => {
                 // Notify the user that the text has been copied
-               
             })
             .catch((error) => {
                 // Handle any errors that may occur during copying
                 console.error('Failed to copy text: ', error);
             });
     }
+
+    // Define copyFunctionLien
     function copyFunctionLien() {
-
         var codeQuizText = "http://localhost:5259/Quiz/RejoindreQuiz";
-
-        // Use navigator.clipboard.writeText to copy the text to the clipboard
         navigator.clipboard.writeText(codeQuizText)
             .then(() => {
                 // Notify the user that the text has been copied
-
             })
             .catch((error) => {
                 // Handle any errors that may occur during copying
                 console.error('Failed to copy text: ', error);
             });
-
     }
+
+
+    // Define myCodeQuiz variable (assuming you already have it)
+    const myCodeQuiz = "@codeQuiz";
+
+    document.getElementById("form1").addEventListener("submit", function (event) {
+        // Prevent the default form submission behavior
+        event.preventDefault();
+
+        // Invoke the SignalR method when the form is submitted
+        connection.invoke("TechearStartedQuiz", myCodeQuiz)
+            .then(function () {
+                console.log("TechearStartedQuiz invoked successfully.");
+                // Optionally, submit the form after invoking the SignalR method
+                document.getElementById("form1").submit();
+            })
+            .catch(function (err) {
+                console.error('Failed to invoke TechearStartedQuiz: ', err.toString());
+            });
+
+    });
+
+    connection.on("StudentJoined", function (CodeQuiz) {
+        if (myCodeQuiz == CodeQuiz) {
+            location.reload();
+        } else {
+            console.log("Student joined the quiz: " + CodeQuiz + "and" + myCodeQuiz);
+
+        }
+        // Display notification to the teacher
+    });
+    
+   
+    
+
 </script>

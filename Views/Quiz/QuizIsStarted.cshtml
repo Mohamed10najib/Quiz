@@ -1,4 +1,9 @@
-﻿@section CustomStyles{
+﻿
+@{
+
+    string QuizCode = ViewBag.QuizCode;
+}
+@section CustomStyles{
 
     <style>
         .custom-list {
@@ -132,3 +137,31 @@ else
 </div>
    
 }
+
+<script>
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl("/QuizHub") // Specify the URL of your SignalR hub
+        .build();
+
+    // Start the SignalR connection
+    connection.start()
+        .then(function () {
+            console.log("SignalR connected.");
+        })
+        .catch(function (err) {
+            return console.error(err.toString());
+        });
+    const myCodeQuiz = "@QuizCode";
+
+    connection.on("StudentEndQuiz", function (CodeQuiz) {
+        if (myCodeQuiz === CodeQuiz) {
+           
+                location.reload();
+            
+           
+        } else {
+            console.log("Student joined the quiz: " + CodeQuiz + " and " + myCodeQuiz);
+        }
+        // Display notification to the teacher
+    });
+</script>

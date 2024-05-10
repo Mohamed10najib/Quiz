@@ -3,6 +3,7 @@
     Quiz quiz = ViewBag.quiz;
     List<Question> questionList = quiz.Questions.ToList();
     var startedQuizStudentNewId = ViewBag.startedQuizStudentNewId;
+    string codeQuiz = ViewBag.codeQuiz;
 }
 @section CustomStyles{
     <style>
@@ -272,6 +273,7 @@
                             </div>
                                 <input hidden value="@startedQuizStudentNewId" name="StudentQuizId" />
                                 <input hidden value="@q" name="QuizId" />
+                                <input hidden value="@codeQuiz" name="CodeQuiz" />
                             <div class="divNextAndPre">
                                 <div><button onclick="Back()" type="button">Back</button></div>
 
@@ -287,10 +289,15 @@
     </form>
 </div>
 
+
+
 <script>
+ 
+    const codeQuiz = "@codeQuiz";
+    
     function submitForm() {
-        var form = document.getElementById("FormId"); // Replace "yourFormId" with the actual id of your form
-        form.submit();
+            var form = document.getElementById("FormId");
+            form.submit();
     }
     function startTimer(durationInSeconds) {
         var startTime;

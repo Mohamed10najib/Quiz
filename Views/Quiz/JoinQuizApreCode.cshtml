@@ -1,5 +1,5 @@
 ﻿@model StartedQuizTeacher
-
+@using System.Text.Json
 @section CustomStyles {
     <style>
 
@@ -119,3 +119,40 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+
+    localStorage.removeItem('startTime');
+
+    const codeQuiz = "@(Model.CodeQuiz)";
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl("/QuizHub") // Specify the URL of your SignalR hub
+        .build();
+
+    
+    connection.start()
+        .then(function () {
+            console.log("SignalR connected.");
+
+            connection.invoke("StudentJoined", codeQuiz).catch(function (err) {
+                return console.error(err.toString());
+            });
+        })
+        .catch(function (err) {
+            return console.error(err.toString());
+        });
+
+    connection.on("TechearStartedQuiz", function (CodeQuizVar) {
+        if (codeQuiz === CodeQuizVar) {
+            setTimeout(function () {
+
+                location.reload()
+            }, 1000);
+           
+           
+
+        } else {
+            console.log("Teacher started the quiz: " + CodeQuiz + " and " + codeQuiz);
+        }
+    });
+</script>

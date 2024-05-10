@@ -15,15 +15,15 @@ namespace Quiz.Controllers
     public class QuizController : Controller
         
     {
-        private readonly IHubContext<QuizHub> _hubContext;
+     
         private readonly IQuizRepository  _quizRepository;
         private readonly IStartedQuizRepository _StartedQuizRepository;
         private readonly IHttpContextAccessor _context;
         private readonly IUserRepository _userRepository;
 
-        public QuizController(IHubContext<QuizHub> hubContext,IQuizRepository quizRepository, IUserRepository userRepository, IHttpContextAccessor context, IStartedQuizRepository StartedQuizRepository)
+        public QuizController(IQuizRepository quizRepository, IUserRepository userRepository, IHttpContextAccessor context, IStartedQuizRepository StartedQuizRepository)
         {
-            _hubContext = hubContext;
+            
             _quizRepository = quizRepository;
             _userRepository= userRepository;
               _context = context;
@@ -52,6 +52,7 @@ namespace Quiz.Controllers
               
             }
             ViewBag.userScores = userScores;
+            ViewBag.QuizCode = QuizCode;
             return View();
         }
         public async Task<IActionResult> JoinQuizApreCode(string CodeQuiz)
@@ -114,7 +115,7 @@ namespace Quiz.Controllers
                     ViewBag.quiz = quiz;
                  
                     ViewBag.startedQuizStudentNewId = startedQuizStudentNew.Id;
-                    
+                    ViewBag.codeQuiz = CodeQuiz;
                     return View("QuestionPage");
                     
                 }
@@ -124,7 +125,7 @@ namespace Quiz.Controllers
             
         }
         [HttpPost]
-        public async Task<IActionResult> SendResponses(Response res ,int StudentQuizId, int QuizId)
+        public async Task<IActionResult> SendResponses(Response res ,int StudentQuizId, int QuizId,string CodeQuiz)
         {
            
             StartedQuizStudent studentQuizStudent = await  _StartedQuizRepository.GetStartedQuizStudentAsyncById(StudentQuizId);
@@ -151,6 +152,7 @@ namespace Quiz.Controllers
             }
                 ViewBag.scoreN = scoreN;
             ViewBag.bestMark = quiz.Questions.Count;
+            ViewBag.codeQuiz= CodeQuiz;
             studentQuizStudent.Score= scoreN;
              _StartedQuizRepository.Save();
             return View(res);

@@ -43,9 +43,9 @@ app.UseRouting();
 
 
 app.UseAuthorization();
-
+app.MapHub<QuizHub>("QuizHub");
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-app.MapHub<QuizHub>("/hubs/QuizHub");
+
 app.Run();

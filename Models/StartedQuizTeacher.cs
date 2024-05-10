@@ -18,6 +18,7 @@ namespace Quiz.Models
             QuizId = quizId;
             CodeQuiz = codeQuiz;
             IsStarted = false;
+            DateCreation = DateTime.Now;
             IsTerminated = false;
 
         }
@@ -37,7 +38,7 @@ namespace Quiz.Models
         public bool IsStarted { get; set; }
 
         public bool IsTerminated { get; set; }
-
+        public DateTime DateCreation { get; set; }
         // Navigation property to represent the list of students who have started this quiz
         public ICollection<StartedQuizStudent>? StartedQuizStudents { get; set; }
     }

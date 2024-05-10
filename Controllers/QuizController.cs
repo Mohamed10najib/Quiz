@@ -296,12 +296,46 @@ namespace Quiz.Controllers
             _quizRepository.Add(quiz);
             return RedirectToAction("Create","Question",quiz);
         }
+
+        public async Task<IActionResult> PassedQuizzes()
+        {
+            var currentUser = _context.HttpContext.Session.GetString("currentUser");
+            User CurrentrUser = JsonConvert.DeserializeObject<User>(currentUser);
+            List<StartedQuizTeacher> ListStartedQuizTeacher = await   _StartedQuizRepository.GetListStartedTeacher(CurrentrUser.UserId);
+
+            ViewBag.ListStartedQuizTeacher=ListStartedQuizTeacher;
+
+            return View();
+        }
         public async Task<IActionResult> QuizzesAsync()
         {
             IEnumerable<Models.Quiz> list = await _quizRepository.GetAll();
             ViewBag.Quizzes = list;
 
             return View();
+        }
+        public async Task<IActionResult> ListPassedStudent(int idStartedQuiz)
+        {
+            Dictionary<User, StartedQuizStudent> userScores = new Dictionary<User, StartedQuizStudent>();
+            var students = await _StartedQuizRepository.ListStudentQuiz(idStartedQuiz);
+            foreach (var s in students)
+            {
+                if (!s.IsRefused)
+                {
+                    User userA = await _userRepository.GetByIdAsync(s.UserId.Value);
+                    userScores.Add(userA,s);
+                }
+
+
+
+
+            }
+            Dictionary<User, StartedQuizStudent> orderedUserScores = userScores
+                .OrderByDescending(kv => kv.Value.Score)
+                .ToDictionary(kv => kv.Key, kv => kv.Value);
+            ViewBag.userScores = orderedUserScores;
+            return View();
+
         }
 
     }

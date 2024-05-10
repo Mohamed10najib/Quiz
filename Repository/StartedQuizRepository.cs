@@ -84,6 +84,15 @@ namespace Quiz.Repository
             return students;
 
         }
+        public async Task<List<StartedQuizTeacher>> GetListStartedTeacher(int id)
+        {
+
+            return await _context.StartedQuizTeachers
+          .Include(sqt => sqt.StartedQuizStudents) 
+          .Include(sqt => sqt.Quiz)
+          .Where(sqt => sqt.TeacherId == id)
+          .ToListAsync();
+        }
 
     }
 }

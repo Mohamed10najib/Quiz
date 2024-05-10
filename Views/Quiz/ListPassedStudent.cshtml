@@ -1,0 +1,138 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@{
+    var j = 1;
+}
+@section CustomStyles {
+
+    <style>
+        .custom-list {
+            margin-top: 100px;
+            max-height: 380px; /* Set the maximum height for the list */
+            overflow-y: auto; /* Enable vertical scrolling */
+        }
+
+            .custom-list::-webkit-scrollbar {
+                width: 0; /* Set width to 0 to hide scrollbar */
+            }
+
+        /* Optional: If you want to hide scrollbar for Firefox */
+        .custom-list {
+            scrollbar-width: none; /* For Firefox */
+        }
+
+        .status {
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .Terminate {
+            color: red;
+        }
+
+        .NotTerminate {
+            color: green;
+        }
+
+        body {
+            background-color: rgb(33, 33, 33);
+        }
+    </style>
+}
+@{
+    Dictionary<User, StartedQuizStudent> userScores = ViewBag.userScores;
+
+}
+
+@if (userScores != null && userScores.Count > 0)
+{
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="container divC d-flex justify-content-center  vh-100">
+
+        <div class="w-75 dd">
+            <ul class="list-group custom-list">
+                <li class=" list-group-item d-flex justify-content-between align-items-center active">
+                    <span class="badge bg-danger rounded-pill">Range</span>
+                    Liste des participants
+                    <span class="badge bg-danger rounded-pill">Score</span>
+                </li>
+
+                @foreach (var pair in userScores)
+                {
+
+
+
+                  
+
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+
+                            <span class="badge bg-primary rounded-pill">@j</span>
+
+                            <div class="font-monospace">
+                                <p>@pair.Key.Username</p>
+                               
+                            </div>
+
+                        <span class="badge bg-primary rounded-pill">@pair.Value.Score</span>
+                        </li>
+
+
+j++;
+                    
+                }
+
+
+
+            </ul>
+        </div>
+    </div>
+
+}
+else
+{
+        <div class="container divC d-flex justify-content-center  vh-100">
+        <div class="w-75 dd">
+            <ul class="list-group custom-list">
+                <li class=" list-group-item d-flex justify-content-between align-items-center active">
+                    <span class="badge bg-danger rounded-pill">Range</span>
+                    Liste des participants
+                    <span class="badge bg-danger rounded-pill">Score</span>
+                </li>
+
+                <li class=" list-group-item d-flex justify-content-around align-items-center ">
+
+
+                    No one exists.
+
+
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+}
+
+<script>
+   
+
+</script>

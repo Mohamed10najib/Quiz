@@ -1,8 +1,4 @@
-﻿@{
-
-}
-
-<style>
+﻿<style>
     /* Style to center align buttons */
     .centered-buttons {
         text-align: center;
@@ -13,19 +9,31 @@
     .description {
         padding: 20px;
         text-align: center;
+        color: white; /* Text color */
+    }
+
+    /* Additional styles for buttons */
+    .btn {
+        margin: 10px; /* Adjust button margin */
+        /* Add more button styling as needed */
     }
 </style>
-<body>
+<body style="background-image: url('https://cdn.vectorstock.com/i/preview-1x/78/48/hand-holding-megaphone-quiz-plexus-stock-vector-41497848.jpg'); background-size: cover;">
+
     <!-- Project Description -->
-    <div class="description">
-        <h2>Project Title</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    <!-- Project Description -->
+    <div class="description" style="text-align: center; color: #333; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+        <h2 style="color: #007bff; font-size: 2.5rem; font-weight: bold;">QuizMaster</h2>
+        <p style="font-size: 1.2rem; background: linear-gradient(to right, #007bff, #ffffff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+            Welcome to <span style="font-style: italic;">QuizMaster</span>, your ultimate destination for creating, playing, and sharing quizzes on any topic imaginable! Whether you're a trivia enthusiast, an educator, or just looking for a fun way to challenge your friends, <span style="font-style: italic;">QuizMaster</span> has something for everyone.
+        </p>
     </div>
 
     <!-- Buttons -->
     <div class="centered-buttons">
-        <a asp-controller="User" asp-action="Index" type="button" class="btn btn-sm btn-primary mr-2">Sign In</a>
-        <a asp-controller="User" asp-action="Registrer" type="button" class="btn btn-sm btn-secondary">Register</a>
+        <a asp-controller="User" asp-action="Index" type="button" class="btn btn-primary" data-mdb-ripple-init>Sign In</a>
+        <a asp-controller="User" asp-action="Registrer" type="button" class="btn btn-secondary" data-mdb-ripple-init>Register</a>
     </div>
+
 </body>
 </html>

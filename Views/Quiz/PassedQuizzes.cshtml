@@ -10,6 +10,19 @@
                               body {
                                   background-color: rgb(33, 33, 33);
                               }
+
+                              .btnDelete{
+
+                                  border : none;
+                                  outline :none;
+                                  color:red;
+                                  background-color : transparent;
+                                font-weight:bold;
+                              }
+
+                              .Adelete{text-decoration:none;
+                                  color: red; 
+                              }
 </style>
 
 }
@@ -41,14 +54,14 @@
             </div>
             <div class="col-sm-6 mt-4">
                 <div class="card text-center">
-                    <div class="card-header">
-                       
+                    <div class="card-header d-flex justify-content-end">
+                        <a class="Adelete" asp-action="DeletePassedQuiz" asp-route-id="@i.IdStartedQuizTeacher" class="btnDelete"> X </a>
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">@i.Quiz.QuizName</h5>
                         <p class="card-text">@i.Quiz.Description</p>
                         <a asp-action="ListPassedStudent" asp-route-idStartedQuiz="@i.IdStartedQuizTeacher" class="btn btn-primary">Show List Students</a>
-                        <!-- Corrected data-bs-target attribute -->
+                        
                         <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#LL_@i.CodeQuiz">
                             Info
                         </button>

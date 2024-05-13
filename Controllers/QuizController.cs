@@ -229,8 +229,8 @@ namespace Quiz.Controllers
                 }
                 else
                 {
-                    // Handle case when user is null after deserialization
-                    return BadRequest(); // Or return appropriate error response
+                    
+                    return BadRequest(); 
                 }
             }
             else
@@ -239,6 +239,18 @@ namespace Quiz.Controllers
                 return BadRequest(); // Or return appropriate error response
             }
         }
+
+        public async Task<IActionResult> DeletePassedQuiz(int id)
+        {
+            await _StartedQuizRepository.DeleteStartedQuizTeacherAsync(id);
+
+            return RedirectToAction("PassedQuizzes");
+        }
+
+
+
+
+
         [HttpPost]
         public async Task<IActionResult> DeleteParticipant(int TeacherQuizStartedId ,int UserId , string codeQuiz ,int IdQuiz)
         {
@@ -296,7 +308,7 @@ namespace Quiz.Controllers
             _quizRepository.Add(quiz);
             return RedirectToAction("Create","Question",quiz);
         }
-
+       
         public async Task<IActionResult> PassedQuizzes()
         {
             var currentUser = _context.HttpContext.Session.GetString("currentUser");
@@ -338,5 +350,52 @@ namespace Quiz.Controllers
 
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Delete(int idQuiz)
+        {
+            Models.Quiz quiz = await _quizRepository.GetById(idQuiz);
+            if (quiz != null)
+            {
+                bool delete = _quizRepository.Delete(quiz);
+                return RedirectToAction("index");
+            }
+            else
+            {
+                ViewBag.error("Quiz not found ");
+                return View();
+            }
+
+
+        }
+        [HttpPost]
+
+        public async Task<IActionResult> Update(int idQuiz)
+        {
+            Models.Quiz quiz = await _quizRepository.GetById(idQuiz);
+            if (quiz != null)
+            {
+                _quizRepository.Delete(quiz);
+                return View("Create", quiz); // Specify the view name "Update" and pass the quiz object to it
+
+            }
+            else
+            {
+                ViewBag.error("Quiz not found ");
+                return View();
+            }
+
+
+        }
+        public async Task<IActionResult> MyQuizzes()
+        {
+            var currentUser = _context.HttpContext.Session.GetString("currentUser");
+            User CurrentrUser = JsonConvert.DeserializeObject<User>(currentUser);
+            IEnumerable<Models.Quiz> list = await _quizRepository.GetQuizzesByUserIdAsync(CurrentrUser.UserId);
+            ViewBag.Quizzes = list;
+
+            return View();
+        }
+
     }
+
 }

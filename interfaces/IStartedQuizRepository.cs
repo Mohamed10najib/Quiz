@@ -11,6 +11,7 @@ namespace Quiz.interfaces
         Task<bool> IsExistStartedQuizByCodeQuiz(string codeQuiz);
         Task<StartedQuizStudent> GetStartedQuizStudentAsyncById(int id);
         Task<List<StartedQuizTeacher>> GetListStartedTeacher(int id);
+        Task DeleteStartedQuizTeacherAsync(int id);
 
         Task<bool> IsJoinStudent(int studentid ,string codeQuiz);
         Task<IEnumerable<StartedQuizStudent>> ListStudentQuiz(int idStartedTeacher);

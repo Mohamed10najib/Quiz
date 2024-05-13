@@ -1,45 +1,51 @@
 ﻿@model Question
 
+
 @inject IHttpContextAccessor context;
 @using Newtonsoft.Json
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
 @{
     var q = context.HttpContext.Session.GetString("quiz");
     Quiz quiz = JsonConvert.DeserializeObject<Quiz>(q);
-
 }
-<p>Question numero : @ViewBag.message </p>
-<form method="post" asp-action="Create">
-    <div class="mb-3">
-        <label asp-for="QuestionText" class="form-label">QuestionText </label>
-        <input asp-for="QuestionText" type="text" class="form-control" id="QuizName">
-        <span asp-validation-for="QuestionText" class="text-danger">entrer vottre QuestionText</span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Response" class="form-label">Response</label>
-        <input asp-for="Response" type="text" class="form-control" id="QuizName">
-        <span asp-validation-for="Response" class="text-danger">Please select a response</span>
-    </div>
-    <h1>One of the suggention should be equal to the response </h1>
-    <div class="mb-3">
-        <label asp-for="suggestion1" class="form-label">suggestion1 </label>
-        <input asp-for="suggestion1" type="text" class="form-control" id="QuizName">
-        <span asp-validation-for="suggestion1" class="text-danger">entrer vottre suggestion1</span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="suggestion2" class="form-label">suggestion2 </label>
-        <input asp-for="suggestion2" type="text" class="form-control" id="QuizName">
-        <span asp-validation-for="suggestion2" class="text-danger">entrer votre suggestion2</span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="suggestion3" class="form-label">suggestion3 </label>
-        <input asp-for="suggestion3" type="text" class="form-control" id="QuizName">
-        <span asp-validation-for="suggestion3" class="text-danger">entrer vottre suggestion3</span>
-    </div>
-    @* <input hidden asp-for="QuizId" type="text" name="name" value="@quiz.QuizId" />
-    <input hidden asp-for="quiz" type="text" name="name" value="@quiz" /> *@
 
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+<section style="background-image: url('https://thumbs.dreamstime.com/b/quiz-text-concept-blue-background-digital-question-mark-background-quiz-text-concept-blue-background-digital-question-mark-175144759.jpg'); background-size: cover; display: flex; justify-content: center; align-items: center;">
+
+    <div style="background-color: rgba(255, 255, 255, 0.7); padding: 20px; border-radius: 10px; hight: 80%; max-hight: 600px;">
+        <h2 style="text-align: center; color: #007bff;">Create a Question</h2>
+        <p style="text-align: center;">Question number: @ViewBag.message</p>
+        <form method="post" asp-action="Create">
+            <div class="mb-3">
+                <label asp-for="QuestionText" class="form-label">Question Text</label>
+                <input asp-for="QuestionText" type="text" class="form-control">
+                <span asp-validation-for="QuestionText" class="text-danger">Please enter the question text</span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Response" class="form-label">Response</label>
+                <input asp-for="Response" type="text" class="form-control">
+                <span asp-validation-for="Response" class="text-danger">Please enter the response</span>
+            </div>
+            <h3 style="text-align: center;">One of the suggestions should be equal to the response</h3>
+            <div class="mb-3">
+                <label asp-for="suggestion1" class="form-label">Suggestion 1</label>
+                <input asp-for="suggestion1" type="text" class="form-control">
+                <span asp-validation-for="suggestion1" class="text-danger">Please enter suggestion 1</span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="suggestion2" class="form-label">Suggestion 2</label>
+                <input asp-for="suggestion2" type="text" class="form-control">
+                <span asp-validation-for="suggestion2" class="text-danger">Please enter suggestion 2</span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="suggestion3" class="form-label">Suggestion 3</label>
+                <input asp-for="suggestion3" type="text" class="form-control">
+                <span asp-validation-for="suggestion3" class="text-danger">Please enter suggestion 3</span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="suggestion4" class="form-label">Suggestion 4</label>
+                <input asp-for="suggestion4" type="text" class="form-control">
+                <span asp-validation-for="suggestion4" class="text-danger">Please enter suggestion 4</span>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</section>

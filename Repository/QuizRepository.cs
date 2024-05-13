@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Quiz.Data;
 using Quiz.interfaces;
+
 namespace Quiz.Repository
 {
     public class QuizRepository : IQuizRepository
@@ -18,7 +19,19 @@ namespace Quiz.Repository
         }
         public bool Delete(Models.Quiz quiz)
         {
+            // Récupérer tous les StartedQuizTeacher associés au Quiz
+            var startedQuizTeachers = _context.StartedQuizTeachers.Where(sq => sq.QuizId == quiz.QuizId).ToList();
+
+            // Supprimer chaque StartedQuizTeacher associé au Quiz
+            foreach (var startedQuizTeacher in startedQuizTeachers)
+            {
+                _context.Remove(startedQuizTeacher);
+            }
+
+            // Supprimer ensuite le Quiz
             _context.Remove(quiz);
+
+            // Enregistrer les modifications
             return Save();
         }
 

@@ -93,6 +93,21 @@ namespace Quiz.Repository
           .Where(sqt => sqt.TeacherId == id)
           .ToListAsync();
         }
+       public  async Task DeleteStartedQuizTeacherAsync(int id)
+        {
+            
+            StartedQuizTeacher t = await _context.StartedQuizTeachers.FirstOrDefaultAsync(x => x.IdStartedQuizTeacher == id);
+
+            
+            if (t != null)
+            {
+                
+                _context.StartedQuizTeachers.Remove(t);
+
+                
+                await _context.SaveChangesAsync();
+            }
+        }
 
     }
 }

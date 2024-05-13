@@ -1,4 +1,6 @@
-﻿@*
+﻿
+
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
@@ -21,24 +23,26 @@
         text-align: center;
     }
 </style>
-<body>
+<body style="background-image: url('https://cdn.vectorstock.com/i/preview-1x/78/48/hand-holding-megaphone-quiz-plexus-stock-vector-41497848.jpg'); background-size: cover;">
     <!-- Project Description -->
-    <div class="description">
-        <h2>Project Title</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+
+    <div class="description" style="text-align: center; color: #333; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+        <h2 style="color: #007bff; font-size: 2.5rem; font-weight: bold;">QuizMaster</h2>
+        <p style="font-size: 1.2rem; background: linear-gradient(to right, #007bff, #ffffff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+            WIth <span style="font-style: italic;">QuizMaster</span> you can unleash your creativity and craft engaging quizzes tailored to your interests. Create multiple-choice questions, add intriguing suggestions for responses, and customize your quizzes with unique themes and settings. Whether it's a pop culture quiz, a history trivia, or a science challenge, the possibilities are endless!
+        </p>
     </div>
 
     <!-- Buttons -->
     <div class="centered-buttons">
         <a asp-controller="Quiz" asp-action="Create" type="button" class="btn btn-sm btn-outline-secondary">Create a Quizze</a>
+        <a asp-controller="Quiz" asp-action="MyQuizzes" type="button" class="btn btn-sm btn-outline-secondary">My Quizzes</a>
+
         <a asp-controller="Quiz" asp-action="Quizzes" type="button" class="btn btn-sm btn-outline-secondary">Quizzes</a>
         <a asp-controller="Quiz" asp-action="RejoindreQuiz" type="button" class="btn btn-sm btn-outline-secondary">Rejoindre  a Quizze</a>
         <a asp-controller="Quiz" asp-action="PassedQuizzes" type="button" class="btn btn-sm btn-outline-secondary">List of passed quizzes</a>
 
 
     </div>
-   
-    
- 
 </body>
 </html>

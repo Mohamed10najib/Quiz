@@ -1,46 +1,38 @@
-﻿
-@inject IHttpContextAccessor context;
+﻿@inject IHttpContextAccessor context;
 @using Newtonsoft.Json
 @model Quiz
 
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{  
+@{
     var currentUser = context.HttpContext.Session.GetString("currentUser");
     User obj = JsonConvert.DeserializeObject<User>(currentUser);
-   
-
-
 }
-<p>Hey mr @obj.UserId , @obj.Username , @obj.Password </p>
-<form method="post" asp-action="Create">
-    <div class="mb-3">
-        <label asp-for="QuizName" class="form-label">Quiz Name</label>
-        <input asp-for="QuizName" type="text" class="form-control" id="QuizName">
-        <span asp-validation-for="QuizName" class="text-danger">entrer vottre QuizName</span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="Description" class="form-label">Description</label>
-        <input asp-for="Description" type="text" class="form-control" id="Description">
-        <span asp-validation-for="Description" class="text-danger">entrer vottre Description</span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="DurationMinutes" class="form-label">DurationMinutes</label>
-        <input asp-for="DurationMinutes" type="number" class="form-control" id="DurationMinutes">
-        <span asp-validation-for="DurationMinutes" class="text-danger">entrer vottre DurationMinutes</span>
-    </div>
-    <div class="mb-3">
-        <label asp-for="NbrQuestion" class="form-label">NbrQuestion</label>
-        <input asp-for="NbrQuestion" type="number" class="form-control" id="NbrQuestion">
-        <span asp-validation-for="NbrQuestion" class="text-danger">entrer vottre NbrQuestion</span>
-    </div>
-    
+<section style="background-image: url('https://thumbs.dreamstime.com/b/quiz-text-concept-blue-background-digital-question-mark-background-quiz-text-concept-blue-background-digital-question-mark-175144759.jpg'); background-size: cover; height: 100vh; display: flex; justify-content: center; align-items: center;">
 
+    <div style="background-color: rgba(255, 255, 255, 0.7); padding: 20px; border-radius: 10px;">
+        <h2 style="text-align: center; color: #007bff;">Create a Quiz</h2>
+        <form method="post" asp-action="Create">
+            <div class="mb-3">
+                <label asp-for="QuizName" class="form-label">Quiz Name</label>
+                <input asp-for="QuizName" type="text" class="form-control" id="QuizName">
+                <span asp-validation-for="QuizName" class="text-danger">Enter your Quiz Name</span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label">Description</label>
+                <input asp-for="Description" type="text" class="form-control" id="Description">
+                <span asp-validation-for="Description" class="text-danger">Enter your Description</span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="DurationMinutes" class="form-label">Duration Minutes</label>
+                <input asp-for="DurationMinutes" type="number" class="form-control" id="DurationMinutes">
+                <span asp-validation-for="DurationMinutes" class="text-danger">Enter your Duration Minutes</span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="NbrQuestion" class="form-label">Number of Questions</label>
+                <input asp-for="NbrQuestion" type="number" class="form-control" id="NbrQuestion">
+                <span asp-validation-for="NbrQuestion" class="text-danger">Enter your Number of Questions</span>
+            </div>
 
-    
-
-
-    
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</section>

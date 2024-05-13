@@ -23,6 +23,8 @@ namespace Quiz.Models
 
         [Required]
         public string suggestion3 { get; set; }
+        [Required]
+        public string suggestion4 { get; set; }
 
 
     }

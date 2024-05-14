@@ -1,26 +1,47 @@
 ﻿@{
     IEnumerable<Quiz> quizzes = ViewBag.Quizzes;
 }
+@section CustomStyles{
+<style>
 
+        body {
+            background-color: ghostwhite;
+        }
+
+        .titre{display:flex;
+            margin-bottom:30px;
+        justify-content:space-around;
+        font-size:25px;
+            color: gray;
+        }
+
+    
+        .btnSubmit{width:120px;}
+</style>
+
+}
 <div class="container">
+    <div class=" titre"><b>List Of Quizzes</b></div>
     <div class="row">
         @foreach (Quiz q in quizzes)
         {
             <div class="col-md-4 mb-4">
                 <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">@q.QuizName</h5>
-                        <p class="card-text">@q.Description</p>
-                        <p class="card-text">Duration: @q.DurationMinutes minutes</p>
-                        <p class="card-text">Number of questions: @q.NbrQuestion</p>
+                    <div class="card-body " >
+                        <h5 class="card-title" style="text-align:center">@q.QuizName</h5>
+                        <p class="card-text" style="text-align:center"><b>Description: </b>@q.Description</p>
+                        <p class="card-text" style="text-align:center"><b>Duration:</b> @q.DurationMinutes minutes</p>
+                        <p class="card-text" style="text-align:center"><b>Number of questions:</b> @q.NbrQuestion</p>
                         <form asp-action="startQuizByTeacher">
                             <input hidden type="text" value="@q.QuizId" name="idQuiz" ></input>
                             <input hidden type="text" value="@Guid.NewGuid().ToString()" name="uniqueIdString"></input>
-                            <button type="submit" class="btn btn-primary">Start Quiz</button>
+                            <div class="d-flex justify-content-around"> <button type="submit" class=" btnSubmit btn btn-primary">Start Quiz</button></div>
                         </form>
                     </div>
                 </div>
             </div>
+           
+            
         }
     </div>
 </div>

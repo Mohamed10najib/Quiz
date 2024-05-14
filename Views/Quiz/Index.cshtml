@@ -11,38 +11,52 @@
 }
 
 <style>
+    .createurs{}
+
+    .divCreateurs{margin-top:140px;
+    display:flex;
+   margin-left:470px;
+    }
     /* Style to center align buttons */
     .centered-buttons {
         text-align: center;
-        margin-top: 50px; /* Adjust as needed */
+        margin-top: 30px; /* Adjust as needed */
     }
 
     /* Style to add padding to the description */
     .description {
         padding: 20px;
         text-align: center;
+        margin-top:100px;
     }
 </style>
-<body style="background-image: url('https://cdn.vectorstock.com/i/preview-1x/78/48/hand-holding-megaphone-quiz-plexus-stock-vector-41497848.jpg'); background-size: cover;">
+@section CustomStyles{
+    <style>
+
+        body{background-color:ghostwhite;}
+    </style>
+}
+<body >
     <!-- Project Description -->
 
     <div class="description" style="text-align: center; color: #333; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
-        <h2 style="color: #007bff; font-size: 2.5rem; font-weight: bold;">QuizMaster</h2>
-        <p style="font-size: 1.2rem; background: linear-gradient(to right, #007bff, #ffffff); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-            WIth <span style="font-style: italic;">QuizMaster</span> you can unleash your creativity and craft engaging quizzes tailored to your interests. Create multiple-choice questions, add intriguing suggestions for responses, and customize your quizzes with unique themes and settings. Whether it's a pop culture quiz, a history trivia, or a science challenge, the possibilities are endless!
+        <h2 style="color: #007bff; font-size: 2.5rem; font-weight: bold;">QuizApp</h2>
+        <p style="font-size: 1.2rem; background: linear-gradient(to right, #007bff, black); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+            WIth <b style="font-style: italic;">QuizApp</b> you can unleash your creativity and craft engaging quizzes tailored to your interests. Create multiple-choice questions, add intriguing suggestions for responses, and customize your quizzes with unique themes and settings. Whether it's a pop culture quiz, a history trivia, or a science challenge, the possibilities are endless!
         </p>
     </div>
 
     <!-- Buttons -->
     <div class="centered-buttons">
         <a asp-controller="Quiz" asp-action="Create" type="button" class="btn btn-sm btn-outline-secondary">Create a Quizze</a>
-        <a asp-controller="Quiz" asp-action="MyQuizzes" type="button" class="btn btn-sm btn-outline-secondary">My Quizzes</a>
+        <a asp-controller="Quiz" asp-action="My Quizzes" type="button" class="btn btn-sm btn-outline-secondary">My Quizzes</a>
 
-        <a asp-controller="Quiz" asp-action="Quizzes" type="button" class="btn btn-sm btn-outline-secondary">Quizzes</a>
-        <a asp-controller="Quiz" asp-action="RejoindreQuiz" type="button" class="btn btn-sm btn-outline-secondary">Rejoindre  a Quizze</a>
-        <a asp-controller="Quiz" asp-action="PassedQuizzes" type="button" class="btn btn-sm btn-outline-secondary">List of passed quizzes</a>
+        <a asp-controller="Quiz" asp-action="All Quizzes" type="button" class="btn btn-sm btn-outline-secondary">Quizzes</a>
+        <a asp-controller="Quiz" asp-action="Join to Quiz" type="button" class="btn btn-sm btn-outline-secondary">Rejoindre  a Quizze</a>
+        <a asp-controller="Quiz" asp-action="Passed Quizzes" type="button" class="btn btn-sm btn-outline-secondary">List of passed quizzes</a>
 
 
     </div>
+    <div class="divCreateurs"><b>Created By :</b> <span class="createurs">Mohamed Najib And Mouad Hnika</span></div>
 </body>
 </html>

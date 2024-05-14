@@ -3,10 +3,11 @@ using Quiz.interfaces;
 using Quiz.Models;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Quiz.Controllers
 {
-
+    
     public class UserController : Controller
         
     {
@@ -57,6 +58,13 @@ namespace Quiz.Controllers
              _userRepository.Add(user);
 
             return RedirectToAction("Index");
+        }
+
+        public IActionResult Logout()
+        {
+            _context.HttpContext.Session.Remove("currentUser");
+            return RedirectToAction("Index");
+
         }
     }
 }

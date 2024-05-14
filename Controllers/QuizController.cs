@@ -33,6 +33,9 @@ namespace Quiz.Controllers
 
         public async Task<IActionResult> QuizIsStarted(string QuizCode)
         {
+            var currentUser = _context.HttpContext.Session.GetString("currentUser");
+            User CurrentrUser = JsonConvert.DeserializeObject<User>(currentUser);
+            ViewBag.name = CurrentrUser.Username;
             StartedQuizTeacher startedQuizTeacher = await _StartedQuizRepository.GetStartedQuizByCodeQuiz(QuizCode);
             startedQuizTeacher.IsStarted = true;
             _StartedQuizRepository.UpdateStartedQuizTeacher(startedQuizTeacher);
@@ -57,6 +60,9 @@ namespace Quiz.Controllers
         }
         public async Task<IActionResult> JoinQuizApreCode(string CodeQuiz)
         {
+            var currentUser = _context.HttpContext.Session.GetString("currentUser");
+            User CurrentrUser = JsonConvert.DeserializeObject<User>(currentUser);
+            ViewBag.name = CurrentrUser.Username;
             StartedQuizTeacher startedQuizTeacher = await _StartedQuizRepository.GetStartedQuizByCodeQuiz(CodeQuiz);
             if(startedQuizTeacher == null ) {
 
@@ -127,7 +133,9 @@ namespace Quiz.Controllers
         [HttpPost]
         public async Task<IActionResult> SendResponses(Response res ,int StudentQuizId, int QuizId,string CodeQuiz)
         {
-           
+            var currentUser = _context.HttpContext.Session.GetString("currentUser");
+            User CurrentrUser = JsonConvert.DeserializeObject<User>(currentUser);
+            ViewBag.name = CurrentrUser.Username;
             StartedQuizStudent studentQuizStudent = await  _StartedQuizRepository.GetStartedQuizStudentAsyncById(StudentQuizId);
             studentQuizStudent.terminate = true;
             Models.Quiz quiz = await _quizRepository.GetById(QuizId);
@@ -159,11 +167,16 @@ namespace Quiz.Controllers
         }
         public IActionResult RejoindreQuiz()
         {
-
+            var currentUser = _context.HttpContext.Session.GetString("currentUser");
+            User CurrentrUser = JsonConvert.DeserializeObject<User>(currentUser);
+            ViewBag.name = CurrentrUser.Username;
             return View();
         }
         public async Task<IActionResult> StartQuizByTeacher(int idQuiz, string uniqueIdString)
         {
+            var currentUser = _context.HttpContext.Session.GetString("currentUser");
+            User CurrentrUser = JsonConvert.DeserializeObject<User>(currentUser);
+            ViewBag.name = CurrentrUser.Username;
             string userString = _context.HttpContext.Session.GetString("currentUser");
             if (userString != null)
             {
@@ -242,6 +255,9 @@ namespace Quiz.Controllers
 
         public async Task<IActionResult> DeletePassedQuiz(int id)
         {
+            var currentUser = _context.HttpContext.Session.GetString("currentUser");
+            User CurrentrUser = JsonConvert.DeserializeObject<User>(currentUser);
+            ViewBag.name = CurrentrUser.Username;
             await _StartedQuizRepository.DeleteStartedQuizTeacherAsync(id);
 
             return RedirectToAction("PassedQuizzes");
@@ -254,7 +270,10 @@ namespace Quiz.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteParticipant(int TeacherQuizStartedId ,int UserId , string codeQuiz ,int IdQuiz)
         {
-         StartedQuizStudent s = await   _StartedQuizRepository.GetStartedQuizStudentAsync(UserId, TeacherQuizStartedId);
+            var currentUser = _context.HttpContext.Session.GetString("currentUser");
+            User CurrentrUser = JsonConvert.DeserializeObject<User>(currentUser);
+            ViewBag.name = CurrentrUser.Username;
+            StartedQuizStudent s = await   _StartedQuizRepository.GetStartedQuizStudentAsync(UserId, TeacherQuizStartedId);
             s.IsRefused = true;
             _StartedQuizRepository.Save();
 
@@ -263,10 +282,16 @@ namespace Quiz.Controllers
         }
         public IActionResult Index()
         {
+            var currentUser = _context.HttpContext.Session.GetString("currentUser");
+            User CurrentrUser = JsonConvert.DeserializeObject<User>(currentUser);
+            ViewBag.name = CurrentrUser.Username;
             return View();
         }
         public IActionResult Create()
         {
+            var currentUser = _context.HttpContext.Session.GetString("currentUser");
+            User CurrentrUser = JsonConvert.DeserializeObject<User>(currentUser);
+            ViewBag.name = CurrentrUser.Username;
             _context.HttpContext.Session.SetString("Quest", "false");
 
             return View();
@@ -277,6 +302,8 @@ namespace Quiz.Controllers
             
             var currentUser = _context.HttpContext.Session.GetString("currentUser");
             User CurrentrUser = JsonConvert.DeserializeObject<User>(currentUser);
+            
+            ViewBag.name = CurrentrUser.Username;
             quiz.UserId=CurrentrUser.UserId;
             Console.WriteLine(CurrentrUser.UserId + " " + CurrentrUser.Username);
 
@@ -313,6 +340,7 @@ namespace Quiz.Controllers
         {
             var currentUser = _context.HttpContext.Session.GetString("currentUser");
             User CurrentrUser = JsonConvert.DeserializeObject<User>(currentUser);
+            ViewBag.name = CurrentrUser.Username;
             List<StartedQuizTeacher> ListStartedQuizTeacher = await   _StartedQuizRepository.GetListStartedTeacher(CurrentrUser.UserId);
 
             ViewBag.ListStartedQuizTeacher=ListStartedQuizTeacher;
@@ -321,6 +349,9 @@ namespace Quiz.Controllers
         }
         public async Task<IActionResult> QuizzesAsync()
         {
+            var currentUser = _context.HttpContext.Session.GetString("currentUser");
+            User CurrentrUser = JsonConvert.DeserializeObject<User>(currentUser);
+            ViewBag.name = CurrentrUser.Username;
             IEnumerable<Models.Quiz> list = await _quizRepository.GetAll();
             ViewBag.Quizzes = list;
 
@@ -328,6 +359,9 @@ namespace Quiz.Controllers
         }
         public async Task<IActionResult> ListPassedStudent(int idStartedQuiz)
         {
+            var currentUser = _context.HttpContext.Session.GetString("currentUser");
+            User CurrentrUser = JsonConvert.DeserializeObject<User>(currentUser);
+            ViewBag.name = CurrentrUser.Username;
             Dictionary<User, StartedQuizStudent> userScores = new Dictionary<User, StartedQuizStudent>();
             var students = await _StartedQuizRepository.ListStudentQuiz(idStartedQuiz);
             foreach (var s in students)
@@ -353,6 +387,9 @@ namespace Quiz.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(int idQuiz)
         {
+            var currentUser = _context.HttpContext.Session.GetString("currentUser");
+            User CurrentrUser = JsonConvert.DeserializeObject<User>(currentUser);
+            ViewBag.name = CurrentrUser.Username;
             Models.Quiz quiz = await _quizRepository.GetById(idQuiz);
             if (quiz != null)
             {
@@ -371,6 +408,9 @@ namespace Quiz.Controllers
 
         public async Task<IActionResult> Update(int idQuiz)
         {
+            var currentUser = _context.HttpContext.Session.GetString("currentUser");
+            User CurrentrUser = JsonConvert.DeserializeObject<User>(currentUser);
+            ViewBag.name = CurrentrUser.Username;
             Models.Quiz quiz = await _quizRepository.GetById(idQuiz);
             if (quiz != null)
             {
@@ -390,6 +430,7 @@ namespace Quiz.Controllers
         {
             var currentUser = _context.HttpContext.Session.GetString("currentUser");
             User CurrentrUser = JsonConvert.DeserializeObject<User>(currentUser);
+            ViewBag.name = CurrentrUser.Username;
             IEnumerable<Models.Quiz> list = await _quizRepository.GetQuizzesByUserIdAsync(CurrentrUser.UserId);
             ViewBag.Quizzes = list;
 

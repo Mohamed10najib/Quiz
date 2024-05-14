@@ -4,8 +4,22 @@
 *@
 @{
 }
+@section CustomStyles{<style>body{background-color:gainsboro}
 
-<section class="vh-100" style="background-color: #508bfc;">
+                              input::placeholder {
+                                  
+                                  font-style: italic; 
+                                  font-size: 14px; 
+                                  text-align:center;
+                              }
+
+                              input {
+                                  font-style: italic;
+                                  font-size: 14px;
+                                  text-align: center;
+                              }
+</style>}
+<section class="vh-100" >
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-12 col-md-8 col-lg-6 col-xl-5">
@@ -24,18 +38,19 @@
 
                         <div data-mdb-input-init class="form-outline mb-4">
                             <label asp-for="Username" class="form-label">UserName</label>
-                            <input asp-for="Username" type="text" class="form-control form-control-lg" id="Username">
-                            <span asp-validation-for="Username" class="text-danger">Entrer votre  UserName</span>
+                                <input placeholder="Please write your username." asp-for="Username" type="text" class="form-control form-control-lg" id="Username">
+                            
                         </div>
 
                         <div data-mdb-input-init class="form-outline mb-4">
                             <label asp-for="Password" class="form-label">Password</label>
-                            <input asp-for="Password" type="password" class="form-control form-control-lg" id="Password">
-                            <span asp-validation-for="Password" class="text-danger">Entrer votre Password</span>
+                                <input placeholder="Please write your password." asp-for="Password" type="password" class="form-control form-control-lg" id="password">
+                                <input type="checkbox" id="showPassword"> Show Password
                         </div>
 
 
-                        <button data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
+                        <button data-mdb-button-init data-mdb-ripple-init class="btn btn-primary " type="submit">Login</button>
+                            <a asp-controller="User" asp-action="Registrer" type="button" class="btn btn-secondary" data-mdb-ripple-init>Register</a>
 
                         <hr class="my-4">
                         </form>
@@ -45,3 +60,14 @@
         </div>
     </div>
 </section>
+<script>
+    var passwordInput = document.getElementById("password");
+    var showPasswordCheckbox = document.getElementById("showPassword");
+
+    showPasswordCheckbox.addEventListener("change", function () {
+        if (showPasswordCheckbox.checked) {
+            passwordInput.type = "text";
+        } else {
+            passwordInput.type = "password";
+        }
+    });</script>

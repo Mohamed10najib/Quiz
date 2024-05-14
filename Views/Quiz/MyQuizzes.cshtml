@@ -3,10 +3,28 @@
     String error = ViewBag.error;
 }
 <style>
-    .btn.btn-light:hover {
-        background-color: #007bff;
-        color: #007bff;
+    body {
+        background-color: ghostwhite;
     }
+
+    .titre {
+        display: flex;
+        margin-bottom: 30px;
+        justify-content: space-around;
+        font-size: 25px;
+        color: white;
+    }
+
+    .divbtns {
+        display: flex; /* Make the parent container a flex container */
+        justify-content: space-around;
+      margin-left:40px;
+    }
+
+        .divbtns > div {
+            flex: 1; /* Each child element takes equal space */
+            margin: 0 5px; /* Optional: Add spacing between child elements */
+        }
 </style>
 
 <h1>@error</h1>
@@ -15,27 +33,35 @@
         @foreach (Quiz q in quizzes)
         {
             <div class="col-md-4 mb-4">
-                <div class="card" style="background: linear-gradient(to right, #275986, #ffffff); border-radius: 10px; box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);">
-                    <div class="card-body">
-                        <h5 class="card-title" style="color: #ffffff; text-align: center; font-weight: bold;">@q.QuizName</h5>
-                        <p class="card-text" style="color: #ffffff; text-align: center;">@q.Description</p>
-                        <p class="card-text" style="color: #ffffff; text-align: center;">Duration: @q.DurationMinutes minutes</p>
-                        <p class="card-text" style="color: #ffffff; text-align: center;">Number of questions: @q.NbrQuestion</p>
-                        <form method="post" asp-action="Delete">
-                            <input hidden type="text" value="@q.QuizId" name="idQuiz"></input>
-                            <button type="submit" class="btn btn-light" style="width: 100%; background-color: #ffffff; transition: background-color 0.3s;">
-                                Delete
-                            </button>
-                        </form>
-                        <form asp-action="Update">
-                            <input hidden type="text" value="@q.QuizId" name="idQuiz"></input>
-                            <button type="submit" class="btn btn-light" style="width: 100%; background-color: #ffffff; transition: background-color 0.3s;">
-                                Update
-                            </button>
-                        </form>
+                <div class="card">
+                    <div class="card-body ">
+                        <h5 class="card-title" style="text-align:center">@q.QuizName</h5>
+                        <p class="card-text" style="text-align:center"><b>Description: </b>@q.Description</p>
+                        <p class="card-text" style="text-align:center"><b>Duration:</b> @q.DurationMinutes minutes</p>
+                        <p class="card-text" style="text-align:center"><b>Number of questions:</b> @q.NbrQuestion</p>
+                        <div class="divbtns">
+                            <div>
+                                <form method="post" asp-action="Delete">
+                                    <input type="hidden" value="@q.QuizId" name="idQuiz"></input>
+                                    <button type="submit" class="btn btn-primary" >
+                                        Delete
+                                    </button>
+                                </form>
+                            </div>
+                            <div>
+                                <form asp-action="Update">
+                                    <input hidden type="hidden" value="@q.QuizId" name="idQuiz"></input>
+                                    <button type="submit" class="btn btn-danger"  >
+                                        Update
+                                    </button>
+                                </form>
+                            </div>
+                       
+                        </div>
                     </div>
                 </div>
             </div>
+            
         }
     </div>
 </div>

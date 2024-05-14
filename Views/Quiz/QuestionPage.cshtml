@@ -14,7 +14,7 @@
         }
 
         #carouselExampleControls {
-            background-color: blue;
+            background-color: white ;
         }
 
         .continer {
@@ -219,11 +219,11 @@
 
 <div class="headerApp">
     <div>Quiz Name :@quiz.QuizName</div>
-    <div>Duration : @quiz.DurationMinutes</div>
+    <div>Duration : @quiz.DurationMinutes  minutes</div>
     <div>Rest Time  : <div id="timer"></div></div>
     <div> Number Of  Questions : @quiz.NbrQuestion </div>
   
-    <div> <button class="btn btn-danger">Exit</button></div>
+    <div> <button onclick="submitForm()" class="btn btn-danger">Exit Quiz</button></div>
 </div>
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
     <form asp-action="SendResponses" method="post" id="FormId">
@@ -371,6 +371,9 @@
             return null;
         }
     }
+
+
+    
     function selectAnswer(childElement) {
         var parent = childElement.parentNode;
         var name = childElement.name;

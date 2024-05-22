@@ -8,44 +8,247 @@
     Quiz quiz = JsonConvert.DeserializeObject<Quiz>(q);
 }
 
-<section style="background-image: url('https://thumbs.dreamstime.com/b/quiz-text-concept-blue-background-digital-question-mark-background-quiz-text-concept-blue-background-digital-question-mark-175144759.jpg'); background-size: cover; display: flex; justify-content: center; align-items: center;">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <div style="background-color: rgba(255, 255, 255, 0.7); padding: 20px; border-radius: 10px; hight: 80%; max-hight: 600px;">
-        <h2 style="text-align: center; color: #007bff;">Create a Question</h2>
-        <p style="text-align: center;">Question number: @ViewBag.message</p>
-        <form method="post" asp-action="Create">
-            <div class="mb-3">
-                <label asp-for="QuestionText" class="form-label">Question Text</label>
-                <input asp-for="QuestionText" type="text" class="form-control">
-                <span asp-validation-for="QuestionText" class="text-danger">Please enter the question text</span>
+    <style>
+                             * {
+                                 margin: 0%;
+                                 padding: 0%;
+                                 box-sizing: border-box;
+                             }
+
+                             .continer {
+                                 margin-top: 20px;
+                             }
+
+                             .continerchild {
+                                 background-color: rgb(0, 255, 68);
+                                 width: 85%;
+                                 background-color: rgb(46, 8, 82);
+                                 border-radius: 10px;
+                             }
+
+                             .QuestionDiv {
+                                 height: 250px;
+                                 outline: none;
+                                 border: 1px solid rgb(127, 127, 127);
+                                 border-radius: 10px;
+                             }
+
+                                 .QuestionDiv .inputQ:focus {
+                                     border: 1px solid rgb(141, 21, 162);
+                                 }
+
+                             .AnswerDiv {
+                                 height: 250px;
+                             }
+
+                             .continerchildLast {
+                                 width: 90%;
+                                 margin-top: 20px;
+                                 margin-bottom: 20px;
+                             }
+
+                             .form-check {
+                                 display: flex;
+                                 width: 220px;
+                                 justify-content: center;
+                                 height: 200px;
+                                 border-radius: 10px;
+                                 padding: 0;
+                                 align-items: center;
+                             }
+
+                             .inputQ {
+                                 border: none;
+                                 outline: none;
+                                 background-color: inherit;
+                                 text-align: center;
+                                 padding-top: 70px; /* Adjust based on font size */
+                                 padding-bottom: 5px; /* Adjust based on font size */
+                                 resize: none;
+                                 color: white;
+                                 font-weight: bold;
+                             }
+
+                                 .inputQ:focus {
+                                     background-color: rgba(0, 0, 0, 0.2); /* Adjust the opacity as needed */
+                                     border-radius: 10px;
+                                 }
+
+                             .form-check-child {
+                                 height: 90%;
+                                 width: 85%;
+                                 border-radius: 10px;
+                             }
+
+                             .qst::placeholder {
+                                 font-size: 24px;
+                                 font-weight: 500; /* Adjust the font size as needed */
+                             }
+
+                             .headerApp {
+                                 display: flex;
+                                 height: 60px;
+                                 width: 100%;
+                                 align-items: center;
+                                 justify-content: space-between;
+                             }
+
+                             .form-select {
+                                 height: 35px;
+                                 width: 140px;
+                                 background-color: rgb(234, 234, 234);
+                                 border: none;
+                                 outline: none;
+                             }
+
+                             .headerApp div {
+                                 display: flex;
+                                 justify-content: space-around;
+                                 width: 40%;
+                             }
+
+                             .roteur {
+                                 height: 35px;
+                                 width: 60px;
+                                 font-size: 20px;
+                                 background-color: rgb(234, 234, 234);
+                                 outline: none;
+                                 border: none;
+                                 color: black;
+                             }
+
+                                 .roteur:hover {
+                                     background-color: gray;
+                                 }
+
+                                 .roteur span {
+                                     font-size: larger;
+                                 }
+
+                             .headerApp .div1 {
+                                 width: 20%;
+                             }
+
+                             .eng {
+                                 width: 200px;
+                                 height: 35px;
+                                 background-color: rgb(116, 40, 188);
+                                 outline: none;
+                             }
+
+                                 .eng:hover {
+                                     background-color: rgb(101, 33, 165);
+                                 }
+
+                             .choix {
+                                 width: 150px;
+                             }
+
+                             .clock {
+                                 align-items: center;
+                                 position: relative;
+                                 top: 5px;
+                                 left: 5px;
+                                 font-size: 20px;
+                             }
+
+                             .form-check-input:checked {
+                                 background-color: green;
+                                 width: 20px;
+                                 height: 20px;
+                                 outline: none;
+                                 border: none;
+                                 box-shadow: none;
+                                 border-radius: 50%;
+                             }
+
+                             .form-check-input {
+                                 width: 20px;
+                                 height: 20px;
+                                 outline: none;
+                                 border: none;
+                                 box-shadow: none;
+                                 border-radius: 50%;
+                             }
+
+    .SubmitQ {
+        background-color: rgb(116, 40, 188);
+        width:150px;
+    }
+
+    #divBtnSubmit{display:flex;
+    justify-content:space-around;
+    width:100%;
+   
+    margin-top:20px;
+    }
+    </style>
+
+<form method="post" asp-action="Create">
+<div class="continer d-flex justify-content-around">
+
+    <div class="continerchild continer d-flex justify-content-around">
+     
+        <div class="continerchildLast">
+            <div class="QuestionDiv">
+
+
+                <textarea asp-for="QuestionText" placeholder="Tapez la question ici." class="w-100 h-100 inputQ d-flex align-items-center qst" id="multiline-input" rows="5"></textarea>
             </div>
-            <div class="mb-3">
-                <label asp-for="Response" class="form-label">Response</label>
-                <input asp-for="Response" type="text" class="form-control">
-                <span asp-validation-for="Response" class="text-danger">Please enter the response</span>
+            <div class="AnswerDiv d-flex justify-content-around align-items-center">
+                <div class="form-check" style="background-color: Gold;">
+                        <input checked class="form-check-input" type="radio" id="flexCheckChecked" name="resp">
+                    <div class="form-check-child">
+                        <textarea asp-for="suggestion1" placeholder="Tapez l'option de réponse  ici." class="w-100 h-100 inputQ d-flex align-items-center rep" id="multiline-input" rows="5"></textarea>
+                    </div>
+
+                </div>
+                <div class="form-check" style="background-color: LavenderBlush;">
+                        <input class="form-check-input" type="radio" id="flexCheckChecked" name="resp">
+                    <div class="form-check-child">
+                        <textarea asp-for="suggestion2" placeholder=" Tapez l'option de réponse  ici." class="w-100 h-100 inputQ d-flex align-items-center rep" id="multiline-input" rows="5"></textarea>
+                    </div>
+
+                </div>
+                <div class="form-check" style="background-color: LightSeaGreen;">
+                        <input class="form-check-input" type="radio" id="flexCheckChecked" name="resp">
+                    <div class="form-check-child ">
+                        <textarea asp-for="suggestion3" placeholder="Tapez l'option de réponse  ici." class="w-100 h-100 inputQ d-flex align-items-center rep " id="multiline-input" rows="5"></textarea>
+                    </div>
+
+                </div>
+                <div class="form-check" style="background-color:PaleTurquoise;">
+                        <input class="form-check-input" type="radio" id="flexCheckChecked" name="resp">
+                    <div class="form-check-child">
+                        <textarea asp-for="suggestion4" placeholder="Tapez l'option de réponse  ici." class="w-100 h-100 inputQ d-flex align-items-center rep" id="multiline-input" rows="5"></textarea>
+                    </div>
+
+                </div>
+
             </div>
-            <h3 style="text-align: center;">One of the suggestions should be equal to the response</h3>
-            <div class="mb-3">
-                <label asp-for="suggestion1" class="form-label">Suggestion 1</label>
-                <input asp-for="suggestion1" type="text" class="form-control">
-                <span asp-validation-for="suggestion1" class="text-danger">Please enter suggestion 1</span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="suggestion2" class="form-label">Suggestion 2</label>
-                <input asp-for="suggestion2" type="text" class="form-control">
-                <span asp-validation-for="suggestion2" class="text-danger">Please enter suggestion 2</span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="suggestion3" class="form-label">Suggestion 3</label>
-                <input asp-for="suggestion3" type="text" class="form-control">
-                <span asp-validation-for="suggestion3" class="text-danger">Please enter suggestion 3</span>
-            </div>
-            <div class="mb-3">
-                <label asp-for="suggestion4" class="form-label">Suggestion 4</label>
-                <input asp-for="suggestion4" type="text" class="form-control">
-                <span asp-validation-for="suggestion4" class="text-danger">Please enter suggestion 4</span>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+        </div>
+       
+
     </div>
-</section>
+       
+
+</div>
+    <input asp-for="Response" value="c" id="Response" hidden />
+    <div id="divBtnSubmit">  <button type="submit" class="btn SubmitQ btn-primary">Submit</button></div>
+
+</form>
+<script>
+    const radioButtons = document.querySelectorAll('input[type="radio"]');
+
+    radioButtons.forEach(radioButton => {
+        radioButton.addEventListener('change', () => {
+            const textarea = radioButton.parentElement.querySelector('textarea');
+
+            const selectedValue = textarea.value;
+
+            document.getElementById('Response').value = selectedValue;
+        });
+    });
+</script>

@@ -29,7 +29,7 @@ namespace Quiz.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(Question question)
+        public IActionResult Create(Question question ,string resp)
         {
             var nbrQ = TempData["nbrQ"] as int?; // Retrieve nbrQ from TempData
             var quizId = TempData["quizId"] as int? ?? 0; // Retrieve nbrQ from TempData

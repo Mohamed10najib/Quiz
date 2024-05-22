@@ -6,9 +6,9 @@
     var currentUser = context.HttpContext.Session.GetString("currentUser");
     User obj = JsonConvert.DeserializeObject<User>(currentUser);
 }
-<section style="background-image: url('https://thumbs.dreamstime.com/b/quiz-text-concept-blue-background-digital-question-mark-background-quiz-text-concept-blue-background-digital-question-mark-175144759.jpg'); background-size: cover; height: 100vh; display: flex; justify-content: center; align-items: center;">
+<section style="  display: flex; justify-content: center; align-items: center;">
 
-    <div style="background-color: rgba(255, 255, 255, 0.7); padding: 20px; border-radius: 10px;">
+    <div style="background-color: rgba(255, 255, 255, 0.7); padding: 60px; border-radius: 10px;width:500px">
         <h2 style="text-align: center; color: #007bff;">Create a Quiz</h2>
         <form method="post" asp-action="Create">
             <div class="mb-3">
@@ -36,3 +36,7 @@
         </form>
     </div>
 </section>
+<style>
+    body {
+        background-color: ghostwhite;
+    }</style>

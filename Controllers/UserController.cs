@@ -21,7 +21,6 @@ namespace Quiz.Controllers
 
         public IActionResult Index()
         {
-            _context.HttpContext.Session.Remove("currentUser");
             return View();
         }
         [HttpPost]

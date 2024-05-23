@@ -25,10 +25,19 @@
             flex: 1; /* Each child element takes equal space */
             margin: 0 5px; /* Optional: Add spacing between child elements */
         }
+
+    .titre {
+        display: flex;
+        margin-bottom: 30px;
+        justify-content: space-around;
+        font-size: 25px;
+        color: gray;
+    }
 </style>
 
 <h1>@error</h1>
 <div class="container">
+    <div class=" titre"><b>List Of My Quizzes</b></div>
     <div class="row">
         @foreach (Quiz q in quizzes)
         {
@@ -41,18 +50,19 @@
                         <p class="card-text" style="text-align:center"><b>Number of questions:</b> @q.NbrQuestion</p>
                         <div class="divbtns">
                             <div>
-                                <form method="post" asp-action="Delete">
-                                    <input type="hidden" value="@q.QuizId" name="idQuiz"></input>
-                                    <button type="submit" class="btn btn-primary" >
-                                        Delete
+                               
+                                <form asp-action="Update">
+                                    <input hidden type="hidden" value="@q.QuizId" name="idQuiz"></input>
+                                    <button type="submit" class="btn btn-primary ">
+                                        Update
                                     </button>
                                 </form>
                             </div>
                             <div>
-                                <form asp-action="Update">
-                                    <input hidden type="hidden" value="@q.QuizId" name="idQuiz"></input>
-                                    <button type="submit" class="btn btn-danger"  >
-                                        Update
+                                <form method="post" asp-action="Delete">
+                                    <input type="hidden" value="@q.QuizId" name="idQuiz"></input>
+                                    <button type="submit" class="btn btn-danger">
+                                        Delete
                                     </button>
                                 </form>
                             </div>

@@ -192,8 +192,13 @@
         .comm {
             width: 90%;
             height: 50px;
+            margin-bottom:10px;
+            background-color: rgb(116, 40, 188) !important;
         }
 
+            .comm:hover {
+                background-color: rgb(101, 33, 165) !important;
+            }
         .innerdiv1221 {
             width: 95%;
             display: flex;
@@ -259,12 +264,12 @@
         <div class="header">
             @if (ViewBag.myquiz != null)
             {
-                <div>@ViewBag.myquiz.QuizName</div>
-                <div> Duration: @ViewBag.myquiz.DurationMinutes  min</div>
-                <div> Teacher: @(ViewBag.myquiz.user != null ? ViewBag.myquiz.user.Username : "Unknown")</div>
-                <div> Question Number: @ViewBag.myquiz.NbrQuestion</div>
+            <div><b>Title: </b>@ViewBag.myquiz.QuizName</div>
+            <div> <b>Duration: </b>@ViewBag.myquiz.DurationMinutes  min</div>
+            <div> <b>Teacher:</b> @(ViewBag.myquiz.user != null ? ViewBag.myquiz.user.Username : "Unknown")</div>
+            <div> <b>Question Number:</b> @ViewBag.myquiz.NbrQuestion</div>
                 <div>
-                    <a href="@Url.Action("Quizzes", "Quiz")" class="btn btn-danger">Quit QuizApp</a>
+                    <a href="@Url.Action("Quizzes", "Quiz")" class="btn btn-danger">Quit Quiz</a>
                 </div>
             }
             else
@@ -285,9 +290,8 @@
                             <div class="innerdiv11111"><p>1</p></div>
                             <div class="innerdiv11112">
                                 <p>
-                                    Rejoignez-nous en
-                                    utilisant n'importe
-                                    quel appareil
+                                    Join us
+                                    using any device.
                                 </p>
                             </div>
                                 <div class="innerdiv11113"><a href="http://localhost:5259/Quiz/RejoindreQuiz"><p>Page to join the quiz.</p></a></div>
@@ -299,8 +303,8 @@
                             <div class="innerdiv11111"><p>2</p></div>
                             <div class="innerdiv11112">
                                 <p>
-                                    Entrer le
-                                    rejoindre le code
+                                    Enter
+                                    the code to join
                                 </p>
                             </div>
                                 <div class="innerdiv11113">
@@ -324,7 +328,7 @@
                     </form>
                 </div>
                 <div class="innerdiv12">
-                    <div class="innerdiv121"><p>Les participants</p></div>
+                    <div class="innerdiv121"><p><b>The participants</b></p></div>
                     <div class="innerdiv122">
                         <div class="innerdiv1221">
                             @if (listStudent != null)

@@ -33,6 +33,11 @@ namespace Quiz.Controllers
 
         public async Task<IActionResult> QuizIsStarted(string QuizCode)
         {
+            string checkConnectionA = _context.HttpContext.Session.GetString("currentUser");
+            if (checkConnectionA == null)
+            {
+                return RedirectToAction("index", "User");
+            }
             var currentUser = _context.HttpContext.Session.GetString("currentUser");
             User CurrentrUser = JsonConvert.DeserializeObject<User>(currentUser);
             ViewBag.name = CurrentrUser.Username;
@@ -60,6 +65,12 @@ namespace Quiz.Controllers
         }
         public async Task<IActionResult> JoinQuizApreCode(string CodeQuiz)
         {
+
+            string checkConnectionA = _context.HttpContext.Session.GetString("currentUser");
+            if (checkConnectionA == null)
+            {
+                return RedirectToAction("index", "User");
+            }
             var currentUser = _context.HttpContext.Session.GetString("currentUser");
             User CurrentrUser = JsonConvert.DeserializeObject<User>(currentUser);
             ViewBag.name = CurrentrUser.Username;
@@ -133,6 +144,11 @@ namespace Quiz.Controllers
         [HttpPost]
         public async Task<IActionResult> SendResponses(Response res ,int StudentQuizId, int QuizId,string CodeQuiz)
         {
+            string checkConnectionA = _context.HttpContext.Session.GetString("currentUser");
+            if (checkConnectionA == null)
+            {
+                return RedirectToAction("index", "User");
+            }
             var currentUser = _context.HttpContext.Session.GetString("currentUser");
             User CurrentrUser = JsonConvert.DeserializeObject<User>(currentUser);
             ViewBag.name = CurrentrUser.Username;
@@ -167,6 +183,11 @@ namespace Quiz.Controllers
         }
         public IActionResult RejoindreQuiz()
         {
+            string checkConnectionA = _context.HttpContext.Session.GetString("currentUser");
+            if (checkConnectionA == null)
+            {
+                return RedirectToAction("index", "User");
+            }
             var currentUser = _context.HttpContext.Session.GetString("currentUser");
             User CurrentrUser = JsonConvert.DeserializeObject<User>(currentUser);
             ViewBag.name = CurrentrUser.Username;
@@ -174,6 +195,11 @@ namespace Quiz.Controllers
         }
         public async Task<IActionResult> StartQuizByTeacher(int idQuiz, string uniqueIdString)
         {
+            string checkConnectionA = _context.HttpContext.Session.GetString("currentUser");
+            if (checkConnectionA == null)
+            {
+                return RedirectToAction("index", "User");
+            }
             var currentUser = _context.HttpContext.Session.GetString("currentUser");
             User CurrentrUser = JsonConvert.DeserializeObject<User>(currentUser);
             ViewBag.name = CurrentrUser.Username;
@@ -255,6 +281,11 @@ namespace Quiz.Controllers
 
         public async Task<IActionResult> DeletePassedQuiz(int id)
         {
+            string checkConnectionA = _context.HttpContext.Session.GetString("currentUser");
+            if (checkConnectionA == null)
+            {
+                return RedirectToAction("index", "User");
+            }
             var currentUser = _context.HttpContext.Session.GetString("currentUser");
             User CurrentrUser = JsonConvert.DeserializeObject<User>(currentUser);
             ViewBag.name = CurrentrUser.Username;
@@ -270,6 +301,11 @@ namespace Quiz.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteParticipant(int TeacherQuizStartedId ,int UserId , string codeQuiz ,int IdQuiz)
         {
+            string checkConnectionA = _context.HttpContext.Session.GetString("currentUser");
+            if (checkConnectionA == null)
+            {
+                return RedirectToAction("index", "User");
+            }
             var currentUser = _context.HttpContext.Session.GetString("currentUser");
             User CurrentrUser = JsonConvert.DeserializeObject<User>(currentUser);
             ViewBag.name = CurrentrUser.Username;
@@ -282,6 +318,11 @@ namespace Quiz.Controllers
         }
         public IActionResult Index()
         {
+            string checkConnectionA = _context.HttpContext.Session.GetString("currentUser");
+            if (checkConnectionA == null)
+            {
+                return RedirectToAction("index", "User");
+            }
             var currentUser = _context.HttpContext.Session.GetString("currentUser");
             User CurrentrUser = JsonConvert.DeserializeObject<User>(currentUser);
             ViewBag.name = CurrentrUser.Username;
@@ -289,6 +330,11 @@ namespace Quiz.Controllers
         }
         public IActionResult Create()
         {
+            string checkConnectionA = _context.HttpContext.Session.GetString("currentUser");
+            if (checkConnectionA == null)
+            {
+                return RedirectToAction("index", "User");
+            }
             var currentUser = _context.HttpContext.Session.GetString("currentUser");
             User CurrentrUser = JsonConvert.DeserializeObject<User>(currentUser);
             ViewBag.name = CurrentrUser.Username;
@@ -299,7 +345,11 @@ namespace Quiz.Controllers
         [HttpPost]
         public IActionResult Create(Models.Quiz quiz)
         {
-            
+            string checkConnectionA = _context.HttpContext.Session.GetString("currentUser");
+            if (checkConnectionA == null)
+            {
+                return RedirectToAction("index", "User");
+            }
             var currentUser = _context.HttpContext.Session.GetString("currentUser");
             User CurrentrUser = JsonConvert.DeserializeObject<User>(currentUser);
             
@@ -338,6 +388,11 @@ namespace Quiz.Controllers
        
         public async Task<IActionResult> PassedQuizzes()
         {
+            string checkConnectionA = _context.HttpContext.Session.GetString("currentUser");
+            if (checkConnectionA == null)
+            {
+                return RedirectToAction("index", "User");
+            }
             var currentUser = _context.HttpContext.Session.GetString("currentUser");
             User CurrentrUser = JsonConvert.DeserializeObject<User>(currentUser);
             ViewBag.name = CurrentrUser.Username;
@@ -349,6 +404,11 @@ namespace Quiz.Controllers
         }
         public async Task<IActionResult> QuizzesAsync()
         {
+            string checkConnectionA = _context.HttpContext.Session.GetString("currentUser");
+            if (checkConnectionA == null)
+            {
+                return RedirectToAction("index", "User");
+            }
             var currentUser = _context.HttpContext.Session.GetString("currentUser");
             User CurrentrUser = JsonConvert.DeserializeObject<User>(currentUser);
             ViewBag.name = CurrentrUser.Username;
@@ -359,6 +419,11 @@ namespace Quiz.Controllers
         }
         public async Task<IActionResult> ListPassedStudent(int idStartedQuiz)
         {
+            string checkConnectionA = _context.HttpContext.Session.GetString("currentUser");
+            if (checkConnectionA == null)
+            {
+                return RedirectToAction("index", "User");
+            }
             var currentUser = _context.HttpContext.Session.GetString("currentUser");
             User CurrentrUser = JsonConvert.DeserializeObject<User>(currentUser);
             ViewBag.name = CurrentrUser.Username;
@@ -387,6 +452,11 @@ namespace Quiz.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(int idQuiz)
         {
+            string checkConnectionA = _context.HttpContext.Session.GetString("currentUser");
+            if (checkConnectionA == null)
+            {
+                return RedirectToAction("index", "User");
+            }
             var currentUser = _context.HttpContext.Session.GetString("currentUser");
             User CurrentrUser = JsonConvert.DeserializeObject<User>(currentUser);
             ViewBag.name = CurrentrUser.Username;
@@ -408,6 +478,11 @@ namespace Quiz.Controllers
 
         public async Task<IActionResult> Update(int idQuiz)
         {
+            string checkConnectionA = _context.HttpContext.Session.GetString("currentUser");
+            if (checkConnectionA == null)
+            {
+                return RedirectToAction("index", "User");
+            }
             var currentUser = _context.HttpContext.Session.GetString("currentUser");
             User CurrentrUser = JsonConvert.DeserializeObject<User>(currentUser);
             ViewBag.name = CurrentrUser.Username;
@@ -428,6 +503,11 @@ namespace Quiz.Controllers
         }
         public async Task<IActionResult> MyQuizzes()
         {
+            string checkConnectionA = _context.HttpContext.Session.GetString("currentUser");
+            if (checkConnectionA == null)
+            {
+                return RedirectToAction("index", "User");
+            }
             var currentUser = _context.HttpContext.Session.GetString("currentUser");
             User CurrentrUser = JsonConvert.DeserializeObject<User>(currentUser);
             ViewBag.name = CurrentrUser.Username;

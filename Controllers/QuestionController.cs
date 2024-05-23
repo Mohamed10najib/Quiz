@@ -18,8 +18,13 @@ namespace Quiz.Controllers
             _questionRepository = questionRepository;
         }
         public IActionResult Create(Models.Quiz quiz)
-        { 
-            
+        {
+            string checkConnectionA = _context.HttpContext.Session.GetString("currentUser");
+            if (checkConnectionA == null)
+            {
+                return RedirectToAction("index", "User");
+            }
+
             TempData["nbrQ"] = quiz.NbrQuestion;
             TempData["quizId"] = quiz.QuizId;
 
@@ -31,6 +36,11 @@ namespace Quiz.Controllers
         [HttpPost]
         public IActionResult Create(Question question ,string resp)
         {
+            string checkConnectionA = _context.HttpContext.Session.GetString("currentUser");
+            if (checkConnectionA == null)
+            {
+                return RedirectToAction("index", "User");
+            }
             var nbrQ = TempData["nbrQ"] as int?; // Retrieve nbrQ from TempData
             var quizId = TempData["quizId"] as int? ?? 0; // Retrieve nbrQ from TempData
             var q = _context.HttpContext.Session.GetString("quiz");

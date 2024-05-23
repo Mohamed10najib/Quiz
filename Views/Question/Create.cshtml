@@ -178,6 +178,11 @@
         width:150px;
     }
 
+    .SubmitQ:hover {
+            background-color: rgb(101, 33, 165);
+       
+    }
+
     #divBtnSubmit{display:flex;
     justify-content:space-around;
     width:100%;
@@ -187,6 +192,7 @@
     </style>
 
 <form method="post" asp-action="Create">
+   <p style="text-align: center; font-weight:bold">Question number: @ViewBag.message</p>
 <div class="continer d-flex justify-content-around">
 
     <div class="continerchild continer d-flex justify-content-around">
@@ -195,34 +201,34 @@
             <div class="QuestionDiv">
 
 
-                <textarea asp-for="QuestionText" placeholder="Tapez la question ici." class="w-100 h-100 inputQ d-flex align-items-center qst" id="multiline-input" rows="5"></textarea>
+                <textarea required asp-for="QuestionText" placeholder="Tapez la question ici." class="w-100 h-100 inputQ d-flex align-items-center qst" id="multiline-input" rows="5"></textarea>
             </div>
             <div class="AnswerDiv d-flex justify-content-around align-items-center">
                 <div class="form-check" style="background-color: Gold;">
                         <input checked class="form-check-input" type="radio" id="flexCheckChecked" name="resp">
                     <div class="form-check-child">
-                        <textarea asp-for="suggestion1" placeholder="Tapez l'option de réponse  ici." class="w-100 h-100 inputQ d-flex align-items-center rep" id="multiline-input" rows="5"></textarea>
+                            <textarea required asp-for="suggestion1" placeholder="Tapez l'option de réponse  ici." class="w-100 h-100 inputQ d-flex align-items-center rep" id="multiline-input" rows="5"></textarea>
                     </div>
 
                 </div>
                 <div class="form-check" style="background-color: LavenderBlush;">
                         <input class="form-check-input" type="radio" id="flexCheckChecked" name="resp">
                     <div class="form-check-child">
-                        <textarea asp-for="suggestion2" placeholder=" Tapez l'option de réponse  ici." class="w-100 h-100 inputQ d-flex align-items-center rep" id="multiline-input" rows="5"></textarea>
+                            <textarea required asp-for="suggestion2" placeholder=" Tapez l'option de réponse  ici." class="w-100 h-100 inputQ d-flex align-items-center rep" id="multiline-input" rows="5"></textarea>
                     </div>
 
                 </div>
                 <div class="form-check" style="background-color: LightSeaGreen;">
                         <input class="form-check-input" type="radio" id="flexCheckChecked" name="resp">
                     <div class="form-check-child ">
-                        <textarea asp-for="suggestion3" placeholder="Tapez l'option de réponse  ici." class="w-100 h-100 inputQ d-flex align-items-center rep " id="multiline-input" rows="5"></textarea>
+                            <textarea required asp-for="suggestion3" placeholder="Tapez l'option de réponse  ici." class="w-100 h-100 inputQ d-flex align-items-center rep " id="multiline-input" rows="5"></textarea>
                     </div>
 
                 </div>
                 <div class="form-check" style="background-color:PaleTurquoise;">
                         <input class="form-check-input" type="radio" id="flexCheckChecked" name="resp">
                     <div class="form-check-child">
-                        <textarea asp-for="suggestion4" placeholder="Tapez l'option de réponse  ici." class="w-100 h-100 inputQ d-flex align-items-center rep" id="multiline-input" rows="5"></textarea>
+                            <textarea required asp-for="suggestion4" placeholder="Tapez l'option de réponse  ici." class="w-100 h-100 inputQ d-flex align-items-center rep" id="multiline-input" rows="5"></textarea>
                     </div>
 
                 </div>

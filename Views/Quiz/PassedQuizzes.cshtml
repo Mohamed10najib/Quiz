@@ -8,7 +8,7 @@
 @section CustomStyles{<style>
 
                               body {
-                                  background-color: rgb(33, 33, 33);
+                                  background-color: ghostwhite;
                               }
 
                               .btnDelete{
@@ -23,11 +23,20 @@
                               .Adelete{text-decoration:none;
                                   color: red; 
                               }
+
+                              .titre {
+                                  display: flex;
+                                  margin-top: 40px;
+                                  justify-content: space-around;
+                                  font-size: 25px;
+                                  color: rgb(116, 40, 188);
+                              }
 </style>
 
 }
-<p>List of passed quizzes</p>
+
 <div class="container bgk">
+    <div class="titre"><b>List of passed quizzes</b></div>
     <div class="row">
         @foreach (var i in ListStartedQuizTeacher)
         {

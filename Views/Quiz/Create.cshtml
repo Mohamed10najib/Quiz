@@ -9,7 +9,7 @@
 <section style="  display: flex; justify-content: center; align-items: center;">
 
     <div style="background-color: rgba(255, 255, 255, 0.7); padding: 60px; border-radius: 10px;width:500px">
-        <h2 style="text-align: center; color: #007bff;">Create a Quiz</h2>
+        <h2 style="text-align: center; color: rgb(116, 40, 188);">Create a Quiz</h2>
         <form method="post" asp-action="Create">
             <div class="mb-3">
                 <label asp-for="QuizName" class="form-label">Quiz Name</label>
@@ -32,11 +32,24 @@
                 <span asp-validation-for="NbrQuestion" class="text-danger">Enter your Number of Questions</span>
             </div>
 
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btnQS btn-primary">Submit</button>
         </form>
     </div>
 </section>
 <style>
     body {
         background-color: ghostwhite;
-    }</style>
+    }
+
+    .btnQS {
+        width: 380px;
+        margin-left:auto;
+        margin-right:auto;
+        background-color: rgb(116, 40, 188) !important;
+    }
+
+        .btnQS:hover {
+            background-color: rgb(101, 33, 165) !important;
+        }
+    
+</style>

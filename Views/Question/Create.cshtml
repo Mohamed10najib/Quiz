@@ -198,7 +198,7 @@
     </style>
 
 <form method="post" asp-action="Create">
-    <p style="text-align: center; font-weight:bold">Question number: @countQ</p>
+    <p style="text-align: center; font-weight:bold">Question number: <span id="countSpan">1</span></p>
 <div class="continer d-flex justify-content-around">
 
     <div class="continerchild continer d-flex justify-content-around">
@@ -252,6 +252,22 @@
 
 </form>
 <script>
+    if (localStorage.getItem('CountQuestion') === null)
+    {
+        localStorage.setItem('CountQuestion', 1);
+        document.getElementById("countSpan").TextContent = "1";
+    }
+    else
+    {
+        let count = parseInt(localStorage.getItem('CountQuestion'));
+        count += 1;
+        localStorage.setItem('CountQuestion', count);
+        document.getElementById("countSpan").textContent = count;
+
+
+
+
+    }
     const radioButtons = document.querySelectorAll('input[type="radio"]');
 
     radioButtons.forEach(radioButton => {

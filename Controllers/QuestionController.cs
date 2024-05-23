@@ -47,8 +47,7 @@ namespace Quiz.Controllers
             Models.Quiz qui= JsonConvert.DeserializeObject<Models.Quiz>(q);
             question.QuizId = qui.QuizId;
 
-            Console.WriteLine(quizId+"zz"+qui.QuizId);
-            Console.WriteLine(nbrQ+ "hhh");
+          
 
             if (nbrQ!=0)
             {
@@ -73,7 +72,7 @@ namespace Quiz.Controllers
                 {
 
                     nbrQ--;
-                    Console.WriteLine("wahwah  "+nbrQ);
+                 
 
                     TempData["nbrQ"] = nbrQ;
                     ViewBag.message = nbrQ;

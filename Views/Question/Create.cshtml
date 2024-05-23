@@ -2,8 +2,14 @@
 
 
 @inject IHttpContextAccessor context;
+
 @using Newtonsoft.Json
 @{
+    int countQ = 1;
+    if (@ViewBag.message != null)
+    {
+        countQ = @ViewBag.message + 1;
+    }
     var q = context.HttpContext.Session.GetString("quiz");
     Quiz quiz = JsonConvert.DeserializeObject<Quiz>(q);
 }
@@ -192,7 +198,7 @@
     </style>
 
 <form method="post" asp-action="Create">
-   <p style="text-align: center; font-weight:bold">Question number: @ViewBag.message</p>
+    <p style="text-align: center; font-weight:bold">Question number: @countQ</p>
 <div class="continer d-flex justify-content-around">
 
     <div class="continerchild continer d-flex justify-content-around">

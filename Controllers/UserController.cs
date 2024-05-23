@@ -21,6 +21,11 @@ namespace Quiz.Controllers
 
         public IActionResult Index()
         {
+            if (_context.HttpContext.Session.GetString("currentUser") != null)
+            {
+                _context.HttpContext.Session.Remove("currentUser");
+            }
+
             return View();
         }
         [HttpPost]

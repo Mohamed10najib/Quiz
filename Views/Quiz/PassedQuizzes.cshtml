@@ -11,6 +11,9 @@
                                   background-color: ghostwhite;
                               }
 
+                              .shc {
+                                  background-color: rgb(116, 40, 188) !important;
+                              }
                               .btnDelete{
 
                                   border : none;
@@ -69,7 +72,7 @@
                     <div class="card-body">
                         <h5 class="card-title">@i.Quiz.QuizName</h5>
                         <p class="card-text">@i.Quiz.Description</p>
-                        <a asp-action="ListPassedStudent" asp-route-idStartedQuiz="@i.IdStartedQuizTeacher" class="btn btn-primary">Show List Students</a>
+                        <a asp-action="ListPassedStudent" asp-route-idStartedQuiz="@i.IdStartedQuizTeacher" class="btn shc btn-primary">Show List Students</a>
                         
                         <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#LL_@i.CodeQuiz">
                             Info
